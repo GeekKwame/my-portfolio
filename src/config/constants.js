@@ -29,7 +29,7 @@ export const PERSONAL_INFO = {
   headline: HEADLINE,
   bio: 'Cloud and backend engineer building production Python APIs and AWS infrastructure with Terraform, Docker, and CI/CD.',
   intro:
-    'I build Python backends and the AWS infrastructure they run on, declared in Terraform, shipped through CI/CD, and built to run reliably, without surprises.',
+    'I build Python backends and the AWS infrastructure they run on: declared in Terraform or SAM, deployed through CI/CD, and tested before they ship.',
   currentRole: 'Software Engineer at Afarinick Company Limited',
   location: 'Accra, Ghana',
   timezone: 'GMT',
@@ -74,29 +74,26 @@ export const SOCIAL_LINKS = [
   },
 ];
 
-/** Primary navigation — `to` must match a section id */
+/**
+ * Primary navigation. `section` must match a section id on the homepage;
+ * `route` marks a separate page.
+ */
 export const NAVIGATION_LINKS = [
-  { id: 1, name: 'Work', to: 'work' },
-  { id: 2, name: 'Experience', to: 'experience' },
-  { id: 3, name: 'About', to: 'about' },
-  { id: 4, name: 'Skills', to: 'skills' },
-  { id: 5, name: 'Contact', to: 'contact' },
+  { id: 'work', name: 'Work', href: '/#work', section: 'work' },
+  { id: 'projects', name: 'Projects', href: '/projects', route: '/projects' },
+  { id: 'experience', name: 'Experience', href: '/#experience', section: 'experience' },
+  { id: 'about', name: 'About', href: '/#about', section: 'about' },
+  { id: 'contact', name: 'Contact', href: '/#contact', section: 'contact' },
 ];
 
-/** Every section on the page, in order — used by the footer index */
+/** Homepage sections in order, with their numbers — used by section headers and the footer index */
 export const SECTION_INDEX = [
   { number: '01', name: 'Work', to: 'work' },
-  { number: '02', name: 'Experience', to: 'experience' },
-  { number: '03', name: 'About', to: 'about' },
-  { number: '04', name: 'Skills', to: 'skills' },
+  { number: '02', name: 'Skills', to: 'skills' },
+  { number: '03', name: 'Experience', to: 'experience' },
+  { number: '04', name: 'About', to: 'about' },
   { number: '05', name: 'Contact', to: 'contact' },
 ];
-
-/** Flagship project link */
-export const FLAGSHIP = {
-  name: 'Event-Connect',
-  repo: 'https://github.com/GeekKwame/event-registration-system-sam/',
-};
 
 export const RESUME = {
   filename: 'Blessing_Edmund_Kwame_Dogbe_Resume.pdf',

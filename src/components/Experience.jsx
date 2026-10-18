@@ -82,7 +82,7 @@ const Experience = memo(function Experience() {
   return (
     <Section
       id="experience"
-      number="02"
+      number="03"
       label="Experience"
       title="Professional record"
       lede="Most recent first."

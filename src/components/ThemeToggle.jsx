@@ -1,59 +1,41 @@
-import { useEffect, useState } from 'react';
-import { FiSun, FiMoon } from 'react-icons/fi';
+import { FiMoon, FiSun } from 'react-icons/fi';
+import useTheme from '../hooks/useTheme';
 
-const STORAGE_KEY = 'theme';
-const media = () => window.matchMedia('(prefers-color-scheme: dark)');
-
-function readSaved() {
-  try {
-    return localStorage.getItem(STORAGE_KEY);
-  } catch {
-    return null;
-  }
-}
-
-function applyTheme(dark) {
-  document.documentElement.classList.toggle('dark', dark);
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0A0A0A' : '#FFFFFF');
-}
-
+/** Two-position switch: the knob sits under the active icon. */
 function ThemeToggle({ className = '' }) {
-  const [dark, setDark] = useState(() => document.documentElement.classList.contains('dark'));
-
-  // Follow the OS setting live until the visitor picks a theme themselves.
-  useEffect(() => {
-    const mq = media();
-    const onChange = (e) => {
-      if (readSaved()) return;
-      applyTheme(e.matches);
-      setDark(e.matches);
-    };
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
-
-  const toggle = () => {
-    const next = !dark;
-    applyTheme(next);
-    setDark(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, next ? 'dark' : 'light');
-    } catch {
-      /* storage blocked: theme still applies for this visit */
-    }
-  };
-
-  const label = dark ? 'Switch to light theme' : 'Switch to dark theme';
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
     <button
       type="button"
-      onClick={toggle}
-      aria-label={label}
-      title={label}
-      className={`inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition-transform duration-500 hover:rotate-45 ${className}`}
+      role="switch"
+      aria-checked={isDark}
+      aria-label="Dark theme"
+      title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      onClick={toggleTheme}
+      className={`group relative inline-grid h-10 w-[4.5rem] shrink-0 grid-cols-2 items-center rounded-full border border-rule-strong bg-paper-raised p-1
+        transition-colors duration-200 hover:border-ink/40 ${className}`}
     >
-      {dark ? <FiSun size={22} aria-hidden="true" /> : <FiMoon size={20} aria-hidden="true" />}
+      <span
+        aria-hidden="true"
+        data-theme-motion
+        className={`absolute left-1 top-1 h-8 w-8 rounded-full bg-ink shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isDark ? 'translate-x-8' : 'translate-x-0'
+        }`}
+      />
+      <span
+        aria-hidden="true"
+        className={`relative z-10 flex items-center justify-center transition-colors duration-300 ${isDark ? 'text-ink-muted' : 'text-paper'}`}
+      >
+        <FiSun size={16} />
+      </span>
+      <span
+        aria-hidden="true"
+        className={`relative z-10 flex items-center justify-center transition-colors duration-300 ${isDark ? 'text-paper' : 'text-ink-muted'}`}
+      >
+        <FiMoon size={15} />
+      </span>
     </button>
   );
 }

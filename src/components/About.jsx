@@ -10,8 +10,8 @@ const PRINCIPLES = [
     body: 'Production resources live in Terraform or AWS SAM, so every environment can be reviewed, reproduced, and rolled back, with no manual drift.',
   },
   {
-    title: 'No long-lived secrets in CI/CD',
-    body: 'Deployments authenticate to AWS with short-lived STS tokens through OpenID Connect instead of stored access keys.',
+    title: 'Short-lived credentials over stored keys',
+    body: 'Where a pipeline deploys to AWS, I prefer OIDC federation, so each run gets temporary STS credentials instead of an access key sitting in repository secrets.',
   },
   {
     title: 'Isolation by default',
@@ -19,7 +19,7 @@ const PRINCIPLES = [
   },
   {
     title: 'Tests gate the pipeline',
-    body: 'Unit tests, integration tests, linting, and coverage run on every change before anything reaches production.',
+    body: 'Tests and linting run in CI on every push, against a real database service where the code depends on one.',
   },
 ];
 
@@ -32,7 +32,7 @@ const About = memo(function About() {
   return (
     <Section
       id="about"
-      number="03"
+      number="04"
       label="About"
       title="From campus IT support to production cloud systems"
     >

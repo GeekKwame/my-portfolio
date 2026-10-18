@@ -9,18 +9,11 @@
     content="Blessing Edmund is a cloud and backend engineer in Accra, Ghana, building Python APIs (FastAPI and Django) and AWS infrastructure with Terraform, Docker, and CI/CD." />
   <meta name="author" content="Blessing Edmund" />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#FFFFFF" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="canonical" href="https://devedmund.vercel.app/" />
 
-  <script>
-    (function () {
-      var saved = null;
-      try { saved = localStorage.getItem('theme'); } catch (e) { /* storage blocked */ }
-      var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.classList.toggle('dark', dark);
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0A0A0A' : '#FFFFFF');
-    })();
-  </script>
+  <script src="/theme-init.js"></script>
 
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />

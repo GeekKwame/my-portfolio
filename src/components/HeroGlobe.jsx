@@ -127,7 +127,7 @@ const HeroGlobe = memo(function HeroGlobe({ className = '' }) {
 
     const arcsData = buildArcs();
     const Globe = new ThreeGlobe({ animateIn: !reduceMotion })
-      .globeImageUrl('/earth-blue-marble.jpg')
+      .globeImageUrl('/earth-blue-marble.webp')
       .arcsData([])
       .arcColor('color')
       .arcDashLength(0.35)
@@ -216,7 +216,7 @@ const HeroGlobe = memo(function HeroGlobe({ className = '' }) {
     const ensureClouds = () => {
       if (cloudsLoaded) return;
       cloudsLoaded = true;
-      textureLoader.load('/clouds.png', (texture) => {
+      textureLoader.load('/clouds.webp', (texture) => {
         if (cancelled) return;
         texture.anisotropy = 1;
         clouds.material = new THREE.MeshBasicMaterial({
@@ -283,11 +283,11 @@ const HeroGlobe = memo(function HeroGlobe({ className = '' }) {
       const showCountries = lookId === 'countries';
 
       if (lookId === 'night') {
-        Globe.globeImageUrl('/earth-night.jpg').bumpImageUrl(null);
+        Globe.globeImageUrl('/earth-night.webp').bumpImageUrl(null);
       } else if (lookId === 'countries') {
         Globe.globeImageUrl('/earth-dark.jpg').bumpImageUrl(null);
       } else {
-        Globe.globeImageUrl('/earth-blue-marble.jpg').bumpImageUrl(null);
+        Globe.globeImageUrl('/earth-blue-marble.webp').bumpImageUrl(null);
       }
 
       Globe.arcsData(showArcs ? arcsData : []);

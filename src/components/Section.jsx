@@ -2,8 +2,10 @@
  * Shared section shell. Every section uses the same two-column grid: a margin
  * column carrying the section number and name (sticky on large screens), and
  * a content column. `aside` renders extra margin content such as a local index.
+ * `wide` lets the children span the full width below the heading, for grids
+ * that would be cramped inside the content column.
  */
-function Section({ id, number, label, title, lede, aside, tone = 'paper', children }) {
+function Section({ id, number, label, title, lede, aside, tone = 'paper', wide = false, children }) {
   const isInk = tone === 'ink';
 
   return (
@@ -36,8 +38,10 @@ function Section({ id, number, label, title, lede, aside, tone = 'paper', childr
           {lede && (
             <p className={`lede mt-5 ${isInk ? '!text-paper/75' : ''}`}>{lede}</p>
           )}
-          <div className="mt-12 sm:mt-14">{children}</div>
+          {!wide && <div className="mt-12 sm:mt-14">{children}</div>}
         </div>
+
+        {wide && <div className="lg:col-span-12 mt-12 sm:mt-14 lg:mt-16 min-w-0">{children}</div>}
       </div>
     </section>
   );

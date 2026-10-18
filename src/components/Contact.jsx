@@ -68,10 +68,11 @@ const Contact = memo(function Contact() {
               rel="noopener noreferrer"
               onClick={channel.onClick}
               className="group grid grid-cols-[6rem_minmax(0,1fr)_auto] items-baseline gap-4 py-4 min-h-[44px]"
-              aria-label={`${channel.name}: ${channel.detail} (opens in a new tab)`}
             >
               <span className="text-paper-raised group-hover:text-accent-light transition-colors">{channel.name}</span>
-              <span className="font-mono text-meta text-paper/65 truncate">{channel.detail}</span>
+              <span className="font-mono text-meta text-paper/65 truncate">
+                <span className="sr-only"> </span>{channel.detail}<span className="sr-only"> (opens in a new tab)</span>
+              </span>
               <span aria-hidden="true" className="text-paper/65 group-hover:text-accent-light group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
             </a>
           </li>

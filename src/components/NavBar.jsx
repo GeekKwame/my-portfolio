@@ -1,14 +1,19 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { PERSONAL_INFO, NAVIGATION_LINKS, SECTION_INDEX, RESUME, SOCIAL_LINKS } from '../config/constants';
+import { PERSONAL_INFO, NAVIGATION_LINKS, RESUME, SOCIAL_LINKS } from '../config/constants';
 import { trackResumeDownload, trackSocialClick } from '../utils/analytics';
+import { ROUTES } from '../routing/navigation';
 import ThemeToggle from './ThemeToggle';
+import Link from './Link';
 
-const SECTION_IDS = ['work', 'experience', 'about', 'skills', 'contact'];
+const SECTION_IDS = NAVIGATION_LINKS.filter((l) => l.section).map((l) => l.section);
 
-function useActiveSection() {
-  const [active, setActive] = useState('');
+function useActiveSection(path) {
+  const [state, setState] = useState({ path, id: '' });
 
   useEffect(() => {
+    if (path !== ROUTES.home) return undefined;
+    const setActive = (id) => setState({ path, id });
+
     const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean);
     if (!sections.length) return undefined;
 
@@ -32,27 +37,52 @@ function useActiveSection() {
       observer.disconnect();
       window.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [path]);
 
-  return active;
+  return state.path === path ? state.id : '';
 }
 
-function NavBar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const active = useActiveSection();
+/** Hides the header while scrolling down the page and brings it back on any upward scroll. */
+function useHideOnScroll() {
+  const [state, setState] = useState(() => ({ scrolled: window.scrollY > 8, hidden: false }));
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const delta = y - lastY;
+        if (Math.abs(delta) < 4) return;
+        setState({ scrolled: y > 8, hidden: delta > 0 && y > 160 });
+        lastY = y;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  return state;
+}
+
+function NavBar({ path }) {
+  // Remembering which page the menu was opened on closes it after navigating.
+  const [openOn, setOpenOn] = useState(null);
+  const open = openOn === path;
+  const setOpen = (value) => setOpenOn(value ? path : null);
+  const { scrolled, hidden } = useHideOnScroll();
+  const active = useActiveSection(path);
   const menuButtonRef = useRef(null);
   const firstLinkRef = useRef(null);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const isCurrent = (link) => (link.route ? path === link.route : path === ROUTES.home && active === link.section);
 
   const close = useCallback((restoreFocus = true) => {
-    setOpen(false);
+    setOpenOn(null);
     if (restoreFocus) requestAnimationFrame(() => menuButtonRef.current?.focus());
   }, []);
 
@@ -82,47 +112,46 @@ function NavBar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 bg-paper/85 backdrop-blur-md transition-[border-color] duration-200 border-b ${
-        scrolled || open ? 'border-rule' : 'border-transparent'
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 border-b bg-paper/90 backdrop-blur-md transition-[transform,border-color] duration-300
+        focus-within:translate-y-0 ${scrolled || open ? 'border-rule' : 'border-transparent'} ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}
     >
       <div className="shell flex h-16 items-center justify-between gap-6">
-        <a
-          href="#home"
-          aria-label={`${PERSONAL_INFO.name}, back to top`}
+        <Link
+          to={ROUTES.home}
           className="inline-flex min-h-[44px] items-center font-display text-[1.75rem] leading-none text-ink transition-opacity hover:opacity-70"
         >
           {PERSONAL_INFO.initials}
-        </a>
+          <span className="sr-only">, {PERSONAL_INFO.name}, home</span>
+        </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {NAVIGATION_LINKS.map((link) => {
-              const isActive = active === link.to;
+              const current = isCurrent(link);
               return (
                 <li key={link.id}>
-                  <a
-                    href={`#${link.to}`}
-                    aria-current={isActive ? 'location' : undefined}
-                    className={`relative inline-flex items-center min-h-[44px] px-3 text-[0.9375rem] transition-colors ${
-                      isActive ? 'text-ink' : 'text-ink-muted hover:text-ink'
+                  <Link
+                    to={link.href}
+                    aria-current={current ? (link.route ? 'page' : 'location') : undefined}
+                    className={`relative inline-flex min-h-[44px] items-center px-3 text-[0.9375rem] transition-colors ${
+                      current ? 'text-ink' : 'text-ink-muted hover:text-ink'
                     }`}
                   >
                     {link.name}
                     <span
                       aria-hidden="true"
-                      className={`absolute inset-x-3 bottom-2 h-px bg-accent origin-left transition-transform duration-200 ${
-                        isActive ? 'scale-x-100' : 'scale-x-0'
+                      className={`absolute inset-x-3 bottom-2 h-px origin-left bg-accent transition-transform duration-200 ${
+                        current ? 'scale-x-100' : 'scale-x-0'
                       }`}
                     />
-                  </a>
+                  </Link>
                 </li>
               );
             })}
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <a
             href={RESUME.path}
             target="_blank"
@@ -154,25 +183,28 @@ function NavBar() {
       </div>
 
       {open && (
-        <div id="mobile-menu" className="lg:hidden fixed inset-x-0 top-16 bottom-0 overflow-y-auto bg-paper border-t border-rule">
+        <div id="mobile-menu" className="lg:hidden fixed inset-x-0 top-16 bottom-0 h-[calc(100dvh-4rem)] overflow-y-auto bg-paper border-t border-rule">
           <nav aria-label="Site menu" className="shell py-6">
             <ol>
-              {NAVIGATION_LINKS.map((link, i) => (
-                <li key={link.id} className="border-b border-rule">
-                  <a
-                    ref={i === 0 ? firstLinkRef : undefined}
-                    href={`#${link.to}`}
-                    onClick={() => close(false)}
-                    aria-current={active === link.to ? 'location' : undefined}
-                    className="flex items-baseline gap-4 py-4"
-                  >
-                    <span className="font-mono text-meta text-accent-strong">{SECTION_INDEX.find((s) => s.to === link.to)?.number}</span>
-                    <span className={`font-sans font-black tracking-[-0.03em] text-[2rem] leading-tight ${active === link.to ? 'text-ink-muted' : 'text-ink'}`}>
-                      {link.name}
-                    </span>
-                  </a>
-                </li>
-              ))}
+              {NAVIGATION_LINKS.map((link, i) => {
+                const current = isCurrent(link);
+                return (
+                  <li key={link.id} className="border-b border-rule">
+                    <Link
+                      ref={i === 0 ? firstLinkRef : undefined}
+                      to={link.href}
+                      onClick={() => close(false)}
+                      aria-current={current ? (link.route ? 'page' : 'location') : undefined}
+                      className="flex items-baseline gap-4 py-4"
+                    >
+                      <span className="font-mono text-meta text-accent-strong">{String(i + 1).padStart(2, '0')}</span>
+                      <span className={`font-sans font-black tracking-[-0.03em] text-[2rem] leading-tight ${current ? 'text-ink-muted' : 'text-ink'}`}>
+                        {link.name}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ol>
 
             <ul className="mt-8 space-y-1 text-[0.9375rem]">
