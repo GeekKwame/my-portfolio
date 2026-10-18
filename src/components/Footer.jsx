@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { PERSONAL_INFO, SECTION_INDEX } from '../config/constants';
-import SocialIcons from './SocialIcons';
+import SocialIcons from './SocialIcon';
 
 const Footer = memo(function Footer() {
   const year = new Date().getFullYear();
