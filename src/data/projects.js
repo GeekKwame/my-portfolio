@@ -86,17 +86,17 @@ export const PROJECTS = [
   },
   {
     slug: 'kora',
-    title: 'KORA: Music Player for African Genres',
+    title: 'KORA: African Music Discovery & Streaming',
     shortTitle: 'KORA',
-    summary: 'Django music player with continuous playback across genres',
+    summary: 'Full-length streaming of independent African music from the Audius API',
     category: 'Full-stack',
     problem:
-      'Spotify deprecated 30-second previews, which broke continuous web playback, and African and diaspora genres had few dedicated discovery interfaces.',
+      'Spotify and Deezer expose only metadata or 30-second previews to third-party apps, so a public site cannot legally play full commercial tracks. African genres also have few dedicated discovery interfaces.',
     approach:
-      'A Django backend on Gunicorn serves compressed static assets through WhiteNoise, persists to PostgreSQL with an automatic SQLite fallback, and caches RapidAPI Spotify catalogue lookups in memory. A global HTML5 audio dock plays five lossless genre soundscapes. CI/CD runs on GitHub Actions with a Render blueprint.',
+      'A provider layer normalizes Audius and optional Spotify metadata into one track model with explicit playback modes. Django resolves short-lived signed stream URLs on demand and never stores them, while browsers stream MP3 directly from Audius nodes. Collections for Afrobeats, Amapiano, Highlife and more are built from named searches, cached in memory per session, and protected by timeouts, per-client rate limits and a circuit breaker.',
     decision:
-      'Deterministic hashing maps every catalogue query to a genre soundscape, so playback never stops when a preview is missing. A client-side event bus keeps the audio dock independent of page navigation.',
-    stack: ['Django', 'Python', 'PostgreSQL', 'HTML5 Audio', 'RapidAPI', 'Render', 'GitHub Actions'],
+      'One client-side controller owns the only <audio> element. In-app navigation swaps the page shell around it, so playback survives page changes. Expired stream URLs are re-resolved and resume in place, and restricted tracks link out instead of being faked. 73 Django and 17 Node tests run offline in CI.',
+    stack: ['Django', 'Audius API', 'HTML5 Audio', 'PostgreSQL', 'JavaScript', 'Render', 'GitHub Actions'],
     links: {
       live: 'https://kora-music-player.onrender.com',
       source: 'https://github.com/GeekKwame/kora-music-player',
