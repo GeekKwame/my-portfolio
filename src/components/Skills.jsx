@@ -1,28 +1,29 @@
 import { memo } from 'react';
 import Section from './Section';
-import { PROJECTS, projectAnchor } from '../data/projects';
+import Link from './Link';
+import { PROJECTS, projectHref } from '../data/projects';
 
 /** `evidence` lists project slugs where the capability is demonstrated. */
 const CAPABILITY_GROUPS = [
   {
     category: 'Cloud infrastructure',
-    items: ['AWS ECS Fargate', 'Lambda', 'API Gateway', 'S3 + CloudFront (OAC)', 'VPC, ALB, Auto Scaling', 'AWS WAF', 'Terraform', 'AWS SAM'],
-    evidence: ['file-service', 'event-connect', 'study-planner', 'pulsevote'],
+    items: ['Terraform', 'AWS SAM', 'ECS Fargate', 'Lambda', 'API Gateway', 'S3 + CloudFront (OAC)', 'VPC and ALB', 'AWS WAF'],
+    evidence: ['file-service', 'event-connect', 'terraformed', 'serverless-api'],
   },
   {
     category: 'Backend engineering',
-    items: ['Python', 'FastAPI', 'Django + DRF', 'Pydantic', 'SQLAlchemy 2.0', 'Boto3', 'REST API design', 'Auth and rate limiting'],
-    evidence: ['file-service', 'yencare', 'kora'],
+    items: ['Python', 'FastAPI', 'Django', 'Node.js + Express', 'SQLAlchemy 2.0', 'Pydantic', 'REST API design', 'Auth and rate limiting'],
+    evidence: ['file-service', 'yencare', 'kora', 'renal-route'],
   },
   {
-    category: 'DevOps & CI/CD',
-    items: ['Docker', 'GitHub Actions', 'IAM and OIDC federation', 'CloudWatch', 'Linux, Bash, Nginx', 'Pytest and Jest'],
-    evidence: ['terraformed', 'smart-task', 'pulsevote', 'serverless-api'],
+    category: 'Delivery & testing',
+    items: ['GitHub Actions', 'Docker', 'IAM OIDC federation', 'CloudWatch', 'pytest and moto', 'Playwright', 'Linux and Bash'],
+    evidence: ['file-service', 'yencare', 'terraformed', 'smart-task'],
   },
   {
-    category: 'Databases',
-    items: ['PostgreSQL', 'DynamoDB', 'Redis', 'Schema design and indexing', 'Prisma ORM'],
-    evidence: ['file-service', 'yencare', 'event-connect', 'smart-task'],
+    category: 'Data & geospatial',
+    items: ['PostgreSQL', 'PostGIS + GeoDjango', 'DynamoDB', 'MongoDB', 'Schema design'],
+    evidence: ['file-service', 'asase-gis', 'event-connect', 'yencare'],
   },
 ];
 
@@ -32,7 +33,7 @@ const Skills = memo(function Skills() {
   return (
     <Section
       id="skills"
-      number="04"
+      number="02"
       label="Skills"
       title="What I work with, and where it shows up"
       lede="Grouped by capability rather than listed as logos. Each group links to the projects that use it."
@@ -50,9 +51,9 @@ const Skills = memo(function Skills() {
               <span className="label mr-2">Used in</span>
               {group.evidence.map((slug, i) => (
                 <span key={slug}>
-                  <a href={`#${projectAnchor(slug)}`} className="link !text-ink-muted hover:!text-accent-strong">
+                  <Link to={projectHref(slug)} className="link !text-ink-muted hover:!text-accent-strong">
                     {bySlug[slug].shortTitle}
-                  </a>
+                  </Link>
                   {i < group.evidence.length - 1 && <span aria-hidden="true">, </span>}
                 </span>
               ))}

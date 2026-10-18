@@ -15,9 +15,10 @@
     --rule: 229 229 229;
     --rule-strong: 199 199 199;
     --rule-dark: 42 42 42;
-    --accent: 115 115 115;
-    --accent-strong: 82 82 82;
-    --accent-light: 163 163 163;
+    /* One restrained accent for interactive and structural cues; text uses ink. */
+    --accent: 22 101 74;
+    --accent-strong: 22 101 74;
+    --accent-light: 110 207 160;
     --signal: 21 128 61;
     color-scheme: light;
   }
@@ -33,11 +34,18 @@
     --rule: 38 38 38;
     --rule-strong: 58 58 58;
     --rule-dark: 42 42 42;
-    --accent: 163 163 163;
-    --accent-strong: 212 212 212;
-    --accent-light: 163 163 163;
+    --accent: 110 207 160;
+    --accent-strong: 110 207 160;
+    --accent-light: 110 207 160;
     --signal: 74 222 128;
     color-scheme: dark;
+  }
+
+  /* Set for one frame while the theme changes, so every colour swaps at once. */
+  .theme-switching *:not([data-theme-motion]),
+  .theme-switching *::before,
+  .theme-switching *::after {
+    transition: none !important;
   }
 
   /* Inverted blocks stay dark in dark mode instead of flipping to white. */
@@ -62,7 +70,6 @@
     line-height: 1.65;
     font-feature-settings: 'kern' 1, 'liga' 1;
     -webkit-tap-highlight-color: transparent;
-    transition: background-color 200ms ease, color 200ms ease;
   }
 
   h1, h2, h3, h4 {
@@ -188,6 +195,16 @@
     @apply font-sans text-sm font-medium text-ink-muted leading-relaxed;
   }
 
+  /* Filter chip: aria-pressed carries the state, so the style follows it */
+  .chip {
+    @apply inline-flex items-center gap-2 min-h-[40px] rounded-full border border-rule-strong px-4
+      text-sm font-medium text-ink-muted transition-colors duration-200 hover:border-ink/50 hover:text-ink;
+  }
+
+  .chip[aria-pressed='true'] {
+    @apply border-ink bg-ink text-paper;
+  }
+
   /* Monochrome until hovered, then a slight tilt into colour */
   .grayscale-hover {
     filter: grayscale(100%);
@@ -230,6 +247,16 @@
   @keyframes scribble-boil {
     0% { opacity: 1; }
     33.333%, 100% { opacity: 0; }
+  }
+
+  /* Briefly marks the project a /projects#slug link pointed at */
+  .project-target:target {
+    animation: target-flash 1.6s ease-out;
+  }
+
+  @keyframes target-flash {
+    from { box-shadow: 0 0 0 3px rgb(var(--accent) / 0.45); }
+    to { box-shadow: 0 0 0 3px rgb(var(--accent) / 0); }
   }
 
   [data-reveal] {
