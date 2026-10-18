@@ -61,6 +61,12 @@ Requires Node.js 20.19+ (see `.nvmrc` for 22).
 
 **Netlify:** connect the repo; build and publish settings are in `netlify.toml`.
 
+## Credits
+
+- Globe rendering by [three-globe](https://github.com/vasturiano/three-globe) (MIT).
+- Earth textures (`earth-blue-marble.jpg`, `earth-dark.jpg`, `earth-night.jpg`) and `clouds.png` in `public/` are from the [three-globe examples](https://github.com/vasturiano/three-globe/tree/master/example).
+- `public/countries.geojson` is [Natural Earth](https://www.naturalearthdata.com/) 1:110m Admin 0 country boundaries (public domain), via the three-globe examples.
+
 ## License
 
 Personal use. Built by Blessing Edmund.
