@@ -52,6 +52,13 @@ const About = memo(function About() {
             thread through all of it: infrastructure is part of the product, not something bolted on after it.
           </p>
 
+          <p>
+            I’m now developing my geospatial skills alongside my software engineering work at Afarinick.
+            My Ghana Cocoa Belt project explores QGIS, coordinate systems, spatial joins and geometry
+            validation using synthetic farms. Asase GIS connects that learning to GeoDjango, PostGIS
+            and web mapping. These personal projects document what I can build and what I’m learning next.
+          </p>
+
           <div className="pt-4">
             <h3 className="label">Education</h3>
             <ul className="mt-3 divide-y divide-rule border-y border-rule">

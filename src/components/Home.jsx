@@ -6,7 +6,7 @@ import Link from './Link';
 
 const HeroGlobe = lazy(() => import('./HeroGlobe'));
 
-const FOCUS = ['AWS infrastructure in Terraform and SAM', 'Python APIs with FastAPI and Django', 'CI/CD and automated tests'];
+const FOCUS = ['AWS infrastructure in Terraform and SAM', 'Python APIs with FastAPI and Django', 'Geospatial projects with QGIS and PostGIS'];
 
 const Home = memo(function Home() {
   return (

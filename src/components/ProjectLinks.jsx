@@ -5,8 +5,8 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
 
 /** Live demo and source links. `variant="text"` renders quiet inline links for dense lists. */
 function ProjectLinks({ project, variant = 'buttons', className = '' }) {
-  const { live, source } = project.links ?? {};
-  if (!live && !source) return null;
+  const { live, source, map } = project.links ?? {};
+  if (!live && !source && !map) return null;
 
   const track = (kind) => () => {
     trackProjectView(project.title);
@@ -16,6 +16,12 @@ function ProjectLinks({ project, variant = 'buttons', className = '' }) {
   if (variant === 'text') {
     return (
       <p className={`flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] ${className}`}>
+        {map && (
+          <a href={map} {...external} onClick={track('map_pdf')} className="link"
+            aria-label={`${project.shortTitle} map PDF (opens in a new tab)`}>
+            Map PDF <span aria-hidden="true">↗</span>
+          </a>
+        )}
         {live && (
           <a href={live} {...external} onClick={track('live_demo')} className="link"
             aria-label={`${project.shortTitle} live demo (opens in a new tab)`}>
@@ -34,6 +40,12 @@ function ProjectLinks({ project, variant = 'buttons', className = '' }) {
 
   return (
     <div className={`flex flex-wrap gap-3 ${className}`}>
+      {map && (
+        <a href={map} {...external} onClick={track('map_pdf')} className="btn-primary !min-h-[42px] !px-4"
+          aria-label={`${project.shortTitle} map PDF (opens in a new tab)`}>
+          Map PDF <span aria-hidden="true">↗</span>
+        </a>
+      )}
       {live && (
         <a href={live} {...external} onClick={track('live_demo')} className="btn-primary !min-h-[42px] !px-4"
           aria-label={`${project.shortTitle} live demo (opens in a new tab)`}>

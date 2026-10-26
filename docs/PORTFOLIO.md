@@ -66,6 +66,7 @@ Order within a tier is the order in the array. Keep three or four projects featu
 4. Only state facts you can point to in the repository: test counts from the test files, resource counts from the Terraform, live URLs you have opened recently. Leave optional fields out rather than guessing.
 5. Images go in `src/assets/images/portfolio/` as WebP, imported at the top of the file. Set `kind: 'diagram'` for architecture diagrams (shown on white, uncropped) or `'screenshot'` (cropped to the card). Give `width`, `height`, `alt`, and `caption`. Without an image, cards show a text panel instead.
 6. Add `links.live` only while the demo is reachable. Remove it when a deployment is taken down.
+7. For a static map, use `links.map` for a PDF instead of labelling it a live demo. Ghana Cocoa Belt uses `/ghana-cocoa-belt.pdf`, with a PNG preview imported from the published project. Refresh both assets together and preserve the source attribution in the caption and README credits.
 
 ## Checks before deploying
 

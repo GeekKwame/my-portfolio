@@ -1,6 +1,7 @@
 import fileServiceImage from '../assets/images/portfolio/file-server.webp';
 import yencareImage from '../assets/images/portfolio/yencare-platform.webp';
 import eventConnectImage from '../assets/images/portfolio/event-connect.webp';
+import cocoaBeltImage from '../assets/images/portfolio/ghana-cocoa-belt.png';
 
 /**
  * Focus areas drive the filter on /projects. A project can sit in several.
@@ -27,6 +28,40 @@ export const FOCUS_AREAS = [
  * links       `source` and/or `live`; omit `live` unless the demo is reachable
  */
 export const PROJECTS = [
+  {
+    slug: 'ghana-cocoa-belt',
+    tier: 'featured',
+    title: 'Ghana Cocoa Belt: Mapping Western North',
+    shortTitle: 'Ghana Cocoa Belt',
+    category: 'Geospatial · Cartography',
+    capability: 'Spatial analysis and documented data quality',
+    focus: ['geospatial'],
+    status: 'Learning project',
+    year: '2026',
+    summary: 'A QGIS study of 20 synthetic cocoa plots in Western North, Ghana, placing farms alongside districts, roads, towns and mapped tree-cover loss.',
+    highlight: '20 valid farm polygons across nine districts, with no overlapping pairs or missing area and district attributes.',
+    image: {
+      src: cocoaBeltImage,
+      width: 2572,
+      height: 1818,
+      kind: 'diagram',
+      caption: 'Western North, Ghana: synthetic farm locations and Hansen tree-cover loss, 2021–2024. Sources: OCHA / HDX; © OpenStreetMap contributors; Hansen/UMD/Google/USGS/NASA.',
+      alt: 'Map of Western North showing nine districts, towns, major roads, 20 synthetic farm location markers and annual tree-cover loss from 2021 to 2024.',
+    },
+    problem: 'Build a reproducible map that explains where training farm plots sit relative to administrative boundaries, infrastructure and forest change, while making data quality and limitations explicit.',
+    approach: 'Selected Western North and its nine districts, clipped OSM roads and settlements, and transformed analysis layers to UTM zone 30N. Calculated farm areas, joined each polygon to its district, and clipped Hansen loss-year data using nearest-neighbour resampling. Packaged the layers in a GeoPackage and exported an attributed A4 map with a PyQGIS script.',
+    decision: 'Use EPSG:32630 for metric area calculations and preserve categorical loss-year values during raster reprojection. The farm boundaries are synthetic training data; mapped tree-cover loss provides context and does not establish deforestation or compliance status.',
+    evidence: [
+      '20 synthetic plots covering 71.6 ha across nine districts; zero invalid geometries, overlaps, missing areas or missing district joins.',
+      'Six vector layers and the forest-loss raster are included with relative paths, source licences and a CRS decision guide.',
+      'The project reopens with all layers valid; the export script rebuilds the A4 PDF and PNG from the included data.',
+    ],
+    stack: ['QGIS', 'PyQGIS', 'GeoPackage', 'GDAL', 'Spatial joins', 'CRS transformation'],
+    links: {
+      source: 'https://github.com/GeekKwame/ghana-cocoa-belt-qgis',
+      map: '/ghana-cocoa-belt.pdf',
+    },
+  },
   {
     slug: 'file-service',
     tier: 'featured',
