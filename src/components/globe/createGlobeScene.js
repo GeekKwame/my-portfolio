@@ -3,7 +3,7 @@ import ThreeGlobe from 'three-globe';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { HOME_BASE } from '../../config/constants';
 import { createEarthMaterial } from './earthMaterial';
-import { applyCapStyle, baseCapStyle, findPolygonFeature, forEachPolygonMesh, summarizeCountry } from './countries';
+import { applyCapStyle, baseCapStyle, countryFocus, findPolygonFeature, forEachPolygonMesh, summarizeCountry } from './countries';
 
 const GREEN = new THREE.Color('#7ee7b4');
 const WHITE = new THREE.Color('#ffffff');
@@ -40,6 +40,7 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
   let pointerStart = null;
   let pendingPointer = null;
   let settleUntil = 0;
+  let countryFlight = null;
   const abort = new AbortController();
   const textures = new Map();
   const loader = new THREE.TextureLoader();
@@ -62,14 +63,16 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
   globe.pauseAnimation(); // No library-owned animation loops; motion is scheduled below.
   scene.add(globe);
   const sunlight = new THREE.Vector3(-0.8, 0.65, 1).normalize();
-  const { material, uniforms } = createEarthMaterial(sunlight);
+  const { material, uniforms } = createEarthMaterial(sunlight.clone());
   const previousMaterial = globe.globeMaterial();
   globe.globeMaterial(material);
   previousMaterial.dispose();
-  scene.add(new THREE.AmbientLight('#bed8ee', 0.16));
-  const sun = new THREE.DirectionalLight('#fff4e6', 2.7);
+  scene.add(new THREE.AmbientLight('#d9eaff', 0.65));
+  const sun = new THREE.DirectionalLight('#fff8ee', 3.2);
   sun.position.copy(sunlight).multiplyScalar(500);
-  scene.add(sun);
+  // Keep the key light relative to the viewer as countries come into view.
+  camera.add(sun);
+  scene.add(camera);
 
   const clouds = new THREE.Mesh(
     new THREE.SphereGeometry(101, lowPower ? 40 : 64, lowPower ? 24 : 40),
@@ -94,8 +97,8 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
   controls.enableDamping = !reduced;
   controls.dampingFactor = 0.09;
   controls.rotateSpeed = 0.45;
-  controls.minPolarAngle = Math.PI * 0.12;
-  controls.maxPolarAngle = Math.PI * 0.88;
+  controls.minPolarAngle = Math.PI * 0.025;
+  controls.maxPolarAngle = Math.PI * 0.975;
   controls.update();
   controls.saveState();
   canvas.style.touchAction = 'pan-y pinch-zoom';
@@ -130,19 +133,25 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     forEachPolygonMesh(globe, feature, (cap) => applyCapStyle(cap, color || base.color, opacity ?? base.opacity));
   }
   function selectCountry(feature, focus = false) {
+    countryFlight = null;
     styleCountry(selected);
     selected = feature || null;
-    styleCountry(selected, GREEN, 0.75);
+    styleCountry(selected, GREEN, 0.95);
     onSelection(selected ? summarizeCountry(selected) : null);
     if (focus && feature) {
-      // Camera focus uses the dataset's representative label coordinates.
-      const p = feature.properties;
-      if (Number.isFinite(p.LABEL_X) && Number.isFinite(p.LABEL_Y)) {
-        globe.rotation.y = 0;
-        const pos = globe.getCoords(p.LABEL_Y, p.LABEL_X, 2.35);
-        controls.reset();
-        camera.position.set(pos.x, pos.y, pos.z);
+      const { lat, lng } = countryFocus(feature);
+      if (Number.isFinite(lat) && Number.isFinite(lng)) {
+        // Flush residual drag damping before taking over the camera.
+        controls.enableDamping = false;
         controls.update();
+        controls.enableDamping = !reduced;
+        const pos = globe.getCoords(lat, lng, 2.35);
+        const destination = globe.localToWorld(new THREE.Vector3(pos.x, pos.y, pos.z));
+        countryFlight = {
+          start: camera.position.clone(),
+          turn: new THREE.Quaternion().setFromUnitVectors(camera.position.clone().normalize(), destination.normalize()),
+          started: performance.now(),
+        };
       }
     }
     resumeAt = performance.now() + 5000;
@@ -223,6 +232,14 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     if (lowPower && lastTime && time - lastTime < 1000 / 30 - 1) { invalidate(); return; }
     lastTime = time;
     controls.update(dt);
+    if (countryFlight) {
+      const progress = reduced ? 1 : Math.min((time - countryFlight.started) / 900, 1);
+      const eased = progress * progress * (3 - 2 * progress);
+      camera.position.copy(countryFlight.start).applyQuaternion(new THREE.Quaternion().slerp(countryFlight.turn, eased));
+      controls.update();
+      if (progress === 1) countryFlight = null;
+    }
+    uniforms.sunDirection.value.copy(sun.position).applyQuaternion(camera.quaternion).add(camera.position).normalize();
     const moving = ready && !paused && !reduced && !interacting && time > resumeAt && mode !== 'countries';
     if (moving) {
       globe.rotation.y += dt * 0.035;
@@ -246,11 +263,11 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     }
     // Reapply after async polygon construction; no geometry rebuilt on hover.
     if (mode === 'countries' && time < settleUntil) {
-      countries.forEach((f) => styleCountry(f, f === selected ? GREEN : undefined, f === selected ? 0.75 : undefined));
+      countries.forEach((f) => styleCountry(f, f === selected ? GREEN : undefined, f === selected ? 0.95 : undefined));
     }
     globe.setPointOfView(camera);
     renderer.render(scene, camera);
-    if ((!paused && !reduced && mode !== 'countries') || time < settleUntil) invalidate();
+    if (countryFlight || (!paused && !reduced && mode !== 'countries') || time < settleUntil) invalidate();
   }
   function suspend() {
     cancelAnimationFrame(frame);
@@ -259,12 +276,14 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     globe.pauseAnimation();
   }
   function reset() {
+    countryFlight = null;
     globe.rotation.y = 0;
     controls.reset();
     resumeAt = performance.now() + 5000;
     invalidate(500);
   }
   function rotate(horizontal, vertical = 0) {
+    countryFlight = null;
     globe.rotation.y += horizontal;
     const spherical = new THREE.Spherical().setFromVector3(camera.position);
     spherical.phi = THREE.MathUtils.clamp(spherical.phi + vertical, controls.minPolarAngle, controls.maxPolarAngle);
@@ -285,14 +304,14 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     onMotion(paused, reduced);
     invalidate();
   }
-  const onStart = () => { interacting = true; invalidate(); };
+  const onStart = () => { countryFlight = null; interacting = true; invalidate(); };
   const onEnd = () => { interacting = false; resumeAt = performance.now() + 5000; invalidate(800); };
   const onChange = () => invalidate();
   const onDown = (event) => { pointerStart = { x: event.clientX, y: event.clientY }; };
   const onMove = (event) => { pendingPointer = { x: event.clientX, y: event.clientY }; invalidate(); };
   const onUp = (event) => {
     if (pointerStart && Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) < 6 && mode === 'countries') {
-      selectCountry(pick(event.clientX, event.clientY));
+      selectCountry(pick(event.clientX, event.clientY), true);
     }
     pointerStart = null;
   };
@@ -389,4 +408,3 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     },
   };
 }
-

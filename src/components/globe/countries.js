@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { geoArea, geoCentroid } from 'd3-geo';
 
 const CONTINENT_COLORS = {
   Africa: new THREE.Color('#4ade80'),
@@ -29,6 +30,17 @@ export function summarizeCountry(feature) {
   };
 }
 
+export function countryFocus(feature) {
+  // Focus the largest landmass, so overseas territories do not pull the view
+  // into the ocean. Spherical geometry also handles the antimeridian.
+  const polygons = feature.geometry.type === 'MultiPolygon'
+    ? feature.geometry.coordinates.map((coordinates) => ({ type: 'Polygon', coordinates }))
+    : [feature.geometry];
+  const mainland = polygons.reduce((largest, polygon) => geoArea(polygon) > geoArea(largest) ? polygon : largest);
+  const [lng, lat] = geoCentroid(mainland);
+  return { lat, lng };
+}
+
 export function findPolygonFeature(object) {
   let current = object;
   while (current) {
@@ -53,7 +65,7 @@ export function baseCapStyle(feature) {
   const continent = feature?.properties?.CONTINENT;
   return {
     color: CONTINENT_COLORS[continent] || new THREE.Color('#94a3b8'),
-    opacity: 0.45,
+    opacity: 0.72,
   };
 }
 
@@ -64,4 +76,3 @@ export function applyCapStyle(cap, color, opacity) {
   cap.opacity = opacity;
   cap.needsUpdate = true;
 }
-

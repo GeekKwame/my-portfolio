@@ -13,7 +13,7 @@ export function createEarthMaterial(sunDirection) {
     sunDirection: { value: sunDirection },
   };
   const material = new THREE.MeshPhongMaterial({
-    color: '#ffffff', specular: '#57778b', shininess: 28,
+    color: '#ffffff', specular: '#719fbb', shininess: 38,
   });
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
@@ -27,6 +27,11 @@ export function createEarthMaterial(sunDirection) {
       uniform float nightReady, nightView, countryView;
       uniform vec3 sunDirection;
       ${shader.fragmentShader}`
+      .replace('#include <map_fragment>', `
+        #include <map_fragment>
+        float luminance = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+        diffuseColor.rgb = max(mix(vec3(luminance), diffuseColor.rgb, 1.25), vec3(0.0));
+      `)
       .replace('#include <specularmap_fragment>', `
         #include <specularmap_fragment>
         float ocean = smoothstep(0.015, 0.12, diffuseColor.b - max(diffuseColor.r, diffuseColor.g));
@@ -37,10 +42,10 @@ export function createEarthMaterial(sunDirection) {
         float night = 1.0 - smoothstep(-0.2, 0.15, daylight);
         vec3 cities = texture2D(nightMap, vEarthUv).rgb * nightReady;
         outgoingLight = mix(outgoingLight + cities * night * 0.85, cities * 1.15 + diffuseColor.rgb * 0.025, nightView);
-        outgoingLight = mix(outgoingLight, diffuseColor.rgb * 0.4, countryView);
+        outgoingLight = mix(outgoingLight, diffuseColor.rgb * 0.85, countryView);
         #include <opaque_fragment>
       `);
   };
-  material.customProgramCacheKey = () => 'earth-day-night-v1';
+  material.customProgramCacheKey = () => 'earth-day-night-v2';
   return { material, uniforms };
 }

@@ -63,6 +63,28 @@ test('city lights finish loading before rotation can be paused', async ({ page }
   expect((await canvas.screenshot()).equals(paused)).toBe(true);
 });
 
+for (const reducedMotion of ['no-preference', 'reduce']) {
+  test(`country selection centres the chosen landmass (${reducedMotion})`, async ({ page }) => {
+    test.setTimeout(120000); // Six picks on software-rendered country geometry.
+    await page.emulateMedia({ reducedMotion });
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Countries', exact: true }).click();
+    const selector = page.getByLabel('Explore a country');
+    const canvas = page.locator('canvas');
+    // Start from a rotated globe, then cross hemispheres and the date line.
+    await page.getByRole('button', { name: 'Rotate Earth right', exact: true }).click();
+    for (const name of ['Ghana', 'Japan', 'Brazil', 'Australia', 'Fiji', 'France']) {
+      await selector.selectOption({ label: name });
+      await page.waitForTimeout(reducedMotion === 'reduce' ? 150 : 1200);
+      await page.getByRole('button', { name: 'Clear', exact: true }).click();
+      // Picking the centre must identify the country, not just update its label.
+      const rect = await canvas.boundingBox();
+      await canvas.click({ position: { x: rect.width / 2, y: rect.height / 2 } });
+      await expect(page.locator('.globe-status strong')).toHaveText(name);
+    }
+  });
+}
+
 test('responsive layouts, saved themes, navigation, filters, and image dialogs', async ({ page }) => {
   await readyGlobe(page);
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {
