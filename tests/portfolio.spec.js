@@ -45,6 +45,24 @@ test('Earth rotation, pause, drag, keyboard, reset, and appearance layers', asyn
   expect(errors).toEqual([]);
 });
 
+test('city lights finish loading before rotation can be paused', async ({ page }) => {
+  let nightLoaded = false;
+  await page.route('**/earth-night.webp', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await route.continue();
+    nightLoaded = true;
+  });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Pause rotation', exact: true })).toBeEnabled();
+  expect(nightLoaded).toBe(true);
+  const canvas = page.locator('canvas');
+  await page.getByRole('button', { name: 'Pause rotation', exact: true }).click();
+  await page.waitForTimeout(300);
+  const paused = await canvas.screenshot();
+  await page.waitForTimeout(800);
+  expect((await canvas.screenshot()).equals(paused)).toBe(true);
+});
+
 test('responsive layouts, saved themes, navigation, filters, and image dialogs', async ({ page }) => {
   await readyGlobe(page);
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {

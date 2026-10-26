@@ -334,20 +334,23 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
   const loadingTimeout = setTimeout(() => {
     if (!ready && !destroyed) { failed = true; suspend(); onStatus('unavailable'); }
   }, 15000);
-  loadTexture('/earth-blue-marble.webp').then((texture) => {
+  // City lights are composited into the day view. Apply them before "ready", or they pop in
+  // after pause and the canvas keeps changing with rotation already stopped.
+  const nightPromise = loadTexture('/earth-night.webp').catch(() => null);
+  loadTexture('/earth-blue-marble.webp').then(async (texture) => {
     if (destroyed || !texture || failed) return;
-    clearTimeout(loadingTimeout);
     material.map = texture;
     material.needsUpdate = true;
+    const night = await nightPromise;
+    if (destroyed || failed) return;
+    if (night) {
+      uniforms.nightMap.value = night;
+      uniforms.nightReady.value = 1;
+    }
+    clearTimeout(loadingTimeout);
     ready = true;
     onStatus('ready');
     invalidate(250);
-    return loadTexture('/earth-night.webp').then((night) => {
-      if (destroyed || !night) return;
-      uniforms.nightMap.value = night;
-      uniforms.nightReady.value = 1;
-      invalidate();
-    }).catch(() => { /* Day view remains available; Night retries on demand. */ });
   }).catch(() => {
     if (!destroyed) { clearTimeout(loadingTimeout); failed = true; suspend(); onStatus('unavailable'); }
   });
@@ -386,3 +389,4 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     },
   };
 }
+
