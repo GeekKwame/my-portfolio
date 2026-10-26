@@ -21,6 +21,11 @@ const CAPABILITY_GROUPS = [
     evidence: ['file-service', 'yencare', 'terraformed', 'smart-task'],
   },
   {
+    category: 'Web & AI integration',
+    items: ['JavaScript', 'React', 'Progressive web apps', 'API integration', 'LLM provider adapters'],
+    evidence: ['yencare', 'kora', 'renal-route'],
+  },
+  {
     category: 'Data & geospatial',
     items: ['PostgreSQL', 'PostGIS + GeoDjango', 'QGIS + GeoPackage', 'Spatial joins and geometry validation', 'CRS transformation and area measurement', 'DynamoDB', 'MongoDB'],
     evidence: ['ghana-cocoa-belt', 'asase-gis', 'file-service'],
@@ -35,10 +40,10 @@ const Skills = memo(function Skills() {
       id="skills"
       number="02"
       label="Skills"
-      title="What I work with, and where it shows up"
-      lede="Grouped by capability rather than listed as logos. Each group links to the projects that use it."
+      title="Tools with a purpose"
+      lede="The technologies I use to build, deploy, and maintain software. Follow each capability to a project where it’s put to work."
     >
-      <div className="grid gap-x-10 gap-y-12 sm:grid-cols-2 xl:grid-cols-4 xl:gap-x-8">
+      <div className="grid gap-x-10 gap-y-12 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
         {CAPABILITY_GROUPS.map((group) => (
           <div key={group.category} className="flex flex-col border-t border-ink pt-4">
             <h3 className="text-[1.375rem] text-ink">{group.category}</h3>

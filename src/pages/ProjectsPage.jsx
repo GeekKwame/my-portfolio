@@ -11,7 +11,7 @@ import {
   SUPPORTING_PROJECTS,
 } from '../data/projects';
 import { PERSONAL_INFO } from '../config/constants';
-import { ROUTES } from '../routing/navigation';
+import { ROUTES, onNavigate } from '../routing/navigation';
 
 const ALL = 'all';
 
@@ -19,6 +19,7 @@ const COUNTS = Object.fromEntries(FOCUS_AREAS.map((area) => [area.id, PROJECTS.f
 const AREAS = FOCUS_AREAS.filter((area) => COUNTS[area.id] > 0);
 
 function readFocus() {
+  if (typeof window === 'undefined') return ALL;
   if (window.location.hash) return ALL;
   const value = new URLSearchParams(window.location.search).get('focus');
   return AREAS.some((area) => area.id === value) ? value : ALL;
@@ -144,6 +145,13 @@ export default function ProjectsPage() {
   });
 
   const [focus, setFocus] = useState(readFocus);
+
+  useEffect(() => {
+    const sync = () => setFocus(readFocus());
+    const stop = onNavigate(sync);
+    window.addEventListener('hashchange', sync);
+    return () => { stop(); window.removeEventListener('hashchange', sync); };
+  }, []);
 
   useEffect(() => {
     const url = new URL(window.location.href);

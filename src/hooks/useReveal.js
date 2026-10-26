@@ -19,7 +19,10 @@ export default function useReveal() {
       },
       { rootMargin: '0px 0px -10% 0px' }
     );
-    els.forEach((el) => observer.observe(el));
+    els.forEach((el) => {
+      if (el.getBoundingClientRect().top > window.innerHeight) el.classList.add('will-reveal');
+      observer.observe(el);
+    });
     return () => observer.disconnect();
   }, []);
 }

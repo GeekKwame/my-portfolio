@@ -16,7 +16,7 @@ export function normalizePath(pathname) {
 }
 
 export function currentPath() {
-  return normalizePath(window.location.pathname);
+  return typeof window === 'undefined' ? '/' : normalizePath(window.location.pathname);
 }
 
 export function onNavigate(listener) {
@@ -34,7 +34,9 @@ export function scrollToHash(hash, attempts = 10) {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     return;
   }
-  const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+  let id;
+  try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+  const target = document.getElementById(id);
   if (target) {
     target.scrollIntoView({ block: 'start' });
     return;

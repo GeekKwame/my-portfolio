@@ -34,7 +34,7 @@ const About = memo(function About() {
       id="about"
       number="04"
       label="About"
-      title="From campus IT support to production cloud systems"
+      title="A systems mindset, from the ground up"
     >
       <div className="grid items-start gap-10 sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] sm:gap-14">
         <ScribblePortrait src={profilePic} alt={`Portrait of ${PERSONAL_INFO.name}`} className="mx-auto w-full max-w-[15rem]" />
