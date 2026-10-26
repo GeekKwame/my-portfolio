@@ -9,15 +9,15 @@
   try {
     stored = localStorage.getItem('theme');
   } catch {
-    /* storage blocked: fall back to the OS preference */
+    /* storage blocked: use the default dark palette */
   }
   var theme = stored === 'dark' || stored === 'light'
     ? stored
-    : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    : 'dark';
 
   root.classList.toggle('dark', theme === 'dark');
   root.style.colorScheme = theme;
 
   var meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#ffffff');
+  if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a1014' : '#ffffff');
 })();

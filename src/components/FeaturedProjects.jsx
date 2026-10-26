@@ -14,7 +14,7 @@ function FeaturedCard({ project, number, wide }) {
   return (
     <article
       aria-labelledby={titleId}
-      className={`group flex flex-col overflow-hidden rounded-2xl border border-rule bg-paper transition-[border-color,transform] duration-300
+      className={`group flex flex-col overflow-hidden rounded-2xl border border-rule bg-paper-raised transition-[border-color,transform] duration-300
         hover:-translate-y-1 hover:border-ink/30 ${wide ? 'lg:col-span-2 lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]' : ''}`}
     >
       {/* Same destination as the case-study button, so it is hidden from keyboard and screen readers. */}
@@ -62,7 +62,7 @@ const FeaturedProjects = memo(function FeaturedProjects() {
       label="Work"
       wide
       title="Selected projects"
-      lede="Spatial analysis, backend design, cloud infrastructure, and product engineering—with the decisions and evidence behind each project."
+      lede="From Python APIs and AWS infrastructure to full-stack products and geospatial analysis. Explore the problem, the architecture, and the decisions behind each build."
     >
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
         {FEATURED_PROJECTS.map((project, i) => (

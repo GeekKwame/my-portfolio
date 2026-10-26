@@ -44,7 +44,7 @@ function useActiveSection(path) {
 
 /** Hides the header while scrolling down the page and brings it back on any upward scroll. */
 function useHideOnScroll() {
-  const [state, setState] = useState(() => ({ scrolled: window.scrollY > 8, hidden: false }));
+  const [state, setState] = useState(() => ({ scrolled: typeof window !== 'undefined' && window.scrollY > 8, hidden: false }));
 
   useEffect(() => {
     let lastY = window.scrollY;

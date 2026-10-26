@@ -1,75 +1,36 @@
-import { lazy, memo, Suspense } from 'react';
-import { PERSONAL_INFO } from '../config/constants';
-import { ROUTES } from '../routing/navigation';
-import SocialIcons from './SocialIcons';
-import Link from './Link';
-
-const HeroGlobe = lazy(() => import('./HeroGlobe'));
-
-const FOCUS = ['AWS infrastructure in Terraform and SAM', 'Python APIs with FastAPI and Django', 'Geospatial projects with QGIS and PostGIS'];
+import { memo } from 'react';
+import { PERSONAL_INFO, SOCIAL_LINKS } from '../config/constants';
+import GlobeExperience from './GlobeExperience';
 
 const Home = memo(function Home() {
+  const github = SOCIAL_LINKS.find((link) => link.platform === 'GitHub');
   return (
     <section id="home" aria-label="Introduction" className="hero-plane relative overflow-hidden">
-      <div className="shell relative pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24">
-        <div className="flex flex-col gap-12 lg:grid lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14 lg:items-center">
-          <div className="lg:col-span-6 xl:col-span-7 min-w-0">
-            <p className="text-rise text-[0.9375rem] leading-snug text-ink-muted">
-              {PERSONAL_INFO.title}
-              <span className="text-ink-faint" aria-hidden="true"> · </span>
-              {PERSONAL_INFO.location}
-              <span className="mt-1.5 flex items-center gap-2 text-signal">
-                <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />
-                Open to new roles
-              </span>
-            </p>
-
-            <h1 className="mt-5 sm:mt-6 font-display font-normal text-ink text-[clamp(2.75rem,1.1rem+6.5vw,5.5rem)] leading-[1.02] tracking-[-0.01em]">
-              <span className="block"><span className="text-reveal">Hi, I&apos;m</span></span>
-              <span className="block"><span className="text-reveal [animation-delay:150ms]">{PERSONAL_INFO.name}.</span></span>
-            </h1>
-
-            <p className="text-rise mt-6 sm:mt-8 max-w-[38ch] text-[clamp(1.0625rem,0.95rem+0.55vw,1.3125rem)] leading-[1.5] text-ink-soft [animation-delay:120ms]">
-              {PERSONAL_INFO.intro}
-            </p>
-
-            <ul aria-label="Focus" className="text-rise mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-ink-muted [animation-delay:160ms]">
-              {FOCUS.map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span aria-hidden="true" className="h-1 w-1 rounded-full bg-accent" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-
-            <div className="text-rise mt-8 sm:mt-10 flex flex-wrap gap-3 [animation-delay:200ms]">
-              <a href="#work" className="btn-primary">
-                Selected work <span aria-hidden="true">↓</span>
-              </a>
-              <Link to={ROUTES.projects} className="btn-secondary">All projects</Link>
+      <div className="shell relative pt-28 pb-10 sm:pt-32 lg:pt-36">
+        <div className="hero-grid">
+          <div className="hero-copy min-w-0">
+            <p className="label text-rise flex items-center gap-2.5"><span className="h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />Software engineer · {PERSONAL_INFO.location}</p>
+            <h1 className="hero-title text-rise">Blessing<br />Edmund<span className="text-accent">.</span></h1>
+            <p className="hero-position text-rise">Thoughtful software.<br /><span className="text-ink-muted">Solid foundations.</span></p>
+            <p className="text-rise mt-5 max-w-[43ch] text-base sm:text-lg leading-relaxed text-ink-soft">{PERSONAL_INFO.intro}</p>
+            <p className="mt-5 text-sm text-ink-muted">Backend engineering <span className="mx-2 text-accent" aria-hidden="true">/</span> Cloud infrastructure</p>
+            <div className="text-rise mt-8 flex flex-wrap gap-3">
+              <a href="#work" className="btn-primary">Explore projects <span aria-hidden="true">↘</span></a>
+              <a href={github.url} target="_blank" rel="noopener noreferrer" className="btn-secondary" aria-label="View GitHub (opens in a new tab)">View GitHub <span aria-hidden="true">↗</span></a>
             </div>
-
-            <div className="text-rise mt-8 [animation-delay:280ms]">
-              <SocialIcons source="hero" />
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+              <a href="#contact" className="link inline-flex min-h-[44px] items-center">Let’s work together <span className="ml-2" aria-hidden="true">→</span></a>
+              <span className="text-ink-muted">Open to new roles</span>
             </div>
           </div>
-
-          <div className="mx-auto w-full max-w-[22rem] sm:max-w-[26rem] lg:max-w-none lg:col-span-6 xl:col-span-5 text-rise [animation-delay:200ms]">
-            <Suspense
-              fallback={
-                <div
-                  className="aspect-square w-full rounded-full bg-paper-sunk/80"
-                  aria-hidden="true"
-                />
-              }
-            >
-              <HeroGlobe />
-            </Suspense>
-          </div>
+          <GlobeExperience />
+        </div>
+        <div className="hero-footnote">
+          <p>Built with care. Designed to hold up.</p>
+          <a href="#work" className="inline-flex min-h-[44px] items-center gap-3">Explore the work <span aria-hidden="true">↓</span></a>
         </div>
       </div>
     </section>
   );
 });
-
 export default Home;

@@ -12,7 +12,7 @@ function ScrollToTop() {
 
   return (
     <a
-      href="#home"
+      href="#main"
       data-menu-inert
       tabIndex={isVisible ? 0 : -1}
       aria-hidden={!isVisible}

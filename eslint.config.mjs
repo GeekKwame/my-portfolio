@@ -5,7 +5,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default [
-  { ignores: ['dist/**'] },
+  { ignores: ['dist/**', 'test-results/**', 'playwright-report/**'] },
   {
     files: ['postcss.config.js', 'tailwind.config.js'],
     languageOptions: {
@@ -14,7 +14,7 @@ export default [
     },
   },
   {
-    files: ['vite.config.js', 'eslint.config.mjs'],
+    files: ['vite.config.js', 'playwright.config.js', 'scripts/*.mjs', 'eslint.config.mjs'],
     languageOptions: {
       globals: globals.node,
       sourceType: 'module',
@@ -22,7 +22,7 @@ export default [
   },
   {
     files: ['**/*.{js,jsx}'],
-    ignores: ['postcss.config.js', 'tailwind.config.js', 'vite.config.js'],
+    ignores: ['postcss.config.js', 'tailwind.config.js', 'vite.config.js', 'playwright.config.js'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,

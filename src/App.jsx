@@ -19,8 +19,8 @@ const PAGES = {
   [ROUTES.projects]: ProjectsPage,
 };
 
-function App() {
-  const path = usePathname();
+function App({ initialPath }) {
+  const path = usePathname(initialPath);
   const Page = PAGES[path] ?? NotFoundPage;
 
   // The browser tries to jump to the hash before React has rendered the target.

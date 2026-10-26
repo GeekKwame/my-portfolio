@@ -4,7 +4,7 @@ How the site is put together, how the theme works, and how to add or change a pr
 
 ## Structure
 
-Two pages, rendered by a small client-side router (no router dependency):
+Two pages, prerendered at build time and enhanced by a small client-side router (no router dependency):
 
 | Path | Component | Contents |
 |---|---|---|
@@ -34,15 +34,15 @@ public/theme-init.js         # applies the theme before first paint
 
 1. Add the path to `ROUTES` in `src/routing/navigation.js` and the component to `PAGES` in `src/App.jsx`.
 2. Call `useDocumentMeta` in the page so it gets its own title, description, and canonical URL.
-3. Add a rewrite to `index.html` in `vercel.json`. Netlify already sends every path to `index.html`.
+3. Add the route to `scripts/prerender.mjs` and point the host rewrite to its generated HTML file. `/projects` uses `dist/projects/index.html`; both Vercel and Netlify are configured for this.
 
 Use `<Link to="/path">` for internal links. Links to homepage sections from other pages use `/#section-id`.
 
 ## Theme
 
 - Colours are CSS variables in `src/index.css` (`:root` for light, `.dark` for dark), stored as space-separated RGB so Tailwind opacity modifiers work (`bg-ink/80`). Tailwind maps them in `tailwind.config.js`: `paper`, `ink`, `rule`, `accent`, `signal`. Use these names instead of raw colours so both themes stay consistent.
-- `public/theme-init.js` runs in `<head>` before the page renders. It reads the saved choice from `localStorage` (`theme`), falls back to the OS preference, and sets the `dark` class on `<html>`. It is an external file because the Content-Security-Policy in `vercel.json` blocks inline scripts.
-- `src/theme/ThemeProvider.jsx` owns the theme in React. First visits follow the OS and keep following it until the visitor uses the switch; after that the saved choice wins. Other open tabs update through the `storage` event.
+- `public/theme-init.js` runs in `<head>` before the page renders. It reads the saved choice from `localStorage` (`theme`), defaults to dark mode, and sets the `dark` class on `<html>`. It is an external file because the Content-Security-Policy in `vercel.json` blocks inline scripts.
+- `src/theme/ThemeProvider.jsx` owns the theme in React. First visits use dark mode; after the visitor uses the switch, the saved choice wins. Other open tabs update through the `storage` event.
 - While switching, the `theme-switching` class turns transitions off for one frame so every colour changes at once. Elements that should still animate (the switch knob) carry `data-theme-motion`.
 - If you change the storage key or the background colours, update both `public/theme-init.js` and `src/theme/themeContext.js`.
 
@@ -74,6 +74,20 @@ Order within a tier is the order in the array. Keep three or four projects featu
 npm run lint
 npm run build
 npm run preview   # then check /, /projects, and /projects#<slug>
+npx playwright install chromium
+npm run test:e2e
 ```
 
 Check both themes, a reload on `/projects`, and a phone-width viewport.
+
+## Earth scene
+
+`GlobeExperience.jsx` defers the heavy import until the scene is within 200px of the viewport and contains a local error boundary. `HeroGlobe.jsx` owns UI state. `globe/createGlobeScene.js` owns Three.js, asset loading, controls, visibility, and cleanup. `globe/earthMaterial.js` adds the day/night shading; `globe/countries.js` holds the existing country material and picking helpers.
+
+Keep the frame loop in the scene owner. Do not add React state updates to it or resume three-globe's internal animation loops. Every new geometry, texture, listener, and timer needs corresponding cleanup. Country-mode rotation is intentionally held while people explore it. The sun direction is artistic, not a live solar simulation.
+
+The fallback image is a transparent capture of the scene facing Accra. Update it if the initial camera or day texture changes. Keep its dimensions and the reserved globe layout stable during loading.
+
+## Static HTML
+
+`npm run build` runs Vite followed by `scripts/prerender.mjs`, which renders the actual React pages and project data to `/index.html` and `/projects/index.html`. The client uses `createRoot` to replace this markup and activate interactions; it does not hydrate. Keep state initializers safe when `window` is absent. Effects remain client-only. Route-specific titles, descriptions, canonical URLs, and JSON-LD are in the generated HTML. Rebuild whenever portfolio content changes.

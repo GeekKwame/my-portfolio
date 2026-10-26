@@ -3,31 +3,19 @@ import { createContext } from 'react';
 /** Keep in sync with public/theme-init.js, which applies the theme before React loads. */
 export const STORAGE_KEY = 'theme';
 
-export const THEME_COLOR = { light: '#ffffff', dark: '#0a0a0a' };
+export const THEME_COLOR = { light: '#ffffff', dark: '#0a1014' };
 
 export const ThemeContext = createContext(null);
 
-const darkQuery = () => window.matchMedia('(prefers-color-scheme: dark)');
-
-export function systemTheme() {
-  return darkQuery().matches ? 'dark' : 'light';
-}
-
 /** The visitor's explicit choice, or null if they have never picked one. */
 export function storedTheme() {
+  if (typeof window === 'undefined') return null;
   try {
     const value = localStorage.getItem(STORAGE_KEY);
     return value === 'dark' || value === 'light' ? value : null;
   } catch {
     return null;
   }
-}
-
-export function watchSystemTheme(onChange) {
-  const query = darkQuery();
-  const listener = (event) => onChange(event.matches ? 'dark' : 'light');
-  query.addEventListener('change', listener);
-  return () => query.removeEventListener('change', listener);
 }
 
 /**

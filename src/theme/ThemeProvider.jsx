@@ -1,22 +1,20 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   STORAGE_KEY,
   ThemeContext,
   applyTheme,
   storedTheme,
-  systemTheme,
-  watchSystemTheme,
 } from './themeContext';
 
 /**
- * Owns the light/dark theme. First visits follow the OS setting; once the visitor
+ * Owns the light/dark theme. First visits use dark mode; once the visitor
  * picks a theme it is saved and wins over the OS. Other open tabs follow along.
  */
 export default function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => storedTheme() ?? systemTheme());
+  const [theme, setThemeState] = useState(() => storedTheme() ?? 'dark');
 
   // theme-init.js normally applied this already; repair the DOM if it did not run.
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (document.documentElement.classList.contains('dark') !== (theme === 'dark')) applyTheme(theme);
   }, [theme]);
 
@@ -36,17 +34,12 @@ export default function ThemeProvider({ children }) {
       setThemeState(next);
     };
 
-    const stopWatching = watchSystemTheme((next) => {
-      if (!storedTheme()) follow(next);
-    });
-
     const onStorage = (event) => {
-      if (event.key === STORAGE_KEY || event.key === null) follow(storedTheme() ?? systemTheme());
+      if (event.key === STORAGE_KEY || event.key === null) follow(storedTheme() ?? 'dark');
     };
     window.addEventListener('storage', onStorage);
 
     return () => {
-      stopWatching();
       window.removeEventListener('storage', onStorage);
     };
   }, []);
