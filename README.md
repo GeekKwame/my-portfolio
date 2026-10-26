@@ -69,6 +69,8 @@ Requires Node.js 20.19+ (see `.nvmrc` for 22).
 
 ## Credits
 
+- Ghana Cocoa Belt map preview and PDF: [Ghana Cocoa Belt QGIS project](https://github.com/GeekKwame/ghana-cocoa-belt-qgis), by Blessing Edmund Kwame Dogbe. Farm plots are synthetic. Administrative boundaries: OCHA / HDX (CC BY-IGO); roads and places: © OpenStreetMap contributors (ODbL 1.0); tree-cover loss: Hansen/UMD/Google/USGS/NASA (CC BY 4.0). See the project's [third-party notices](https://github.com/GeekKwame/ghana-cocoa-belt-qgis/blob/main/THIRD_PARTY_NOTICES.md) for licence links and attribution.
+
 - Globe rendering by [three-globe](https://github.com/vasturiano/three-globe) (MIT).
 - Earth textures (`earth-blue-marble.webp`, `earth-dark.jpg`, `earth-night.webp`) and `clouds.webp` in `public/` are from the [three-globe examples](https://github.com/vasturiano/three-globe/tree/master/example). The day, night, and cloud textures are resized to 2048×1024 and converted to WebP.
 - `public/countries.geojson` is [Natural Earth](https://www.naturalearthdata.com/) 1:110m Admin 0 country boundaries (public domain), via the three-globe examples.

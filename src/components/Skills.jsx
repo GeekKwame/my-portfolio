@@ -22,8 +22,8 @@ const CAPABILITY_GROUPS = [
   },
   {
     category: 'Data & geospatial',
-    items: ['PostgreSQL', 'PostGIS + GeoDjango', 'DynamoDB', 'MongoDB', 'Schema design'],
-    evidence: ['file-service', 'asase-gis', 'event-connect', 'yencare'],
+    items: ['PostgreSQL', 'PostGIS + GeoDjango', 'QGIS + GeoPackage', 'Spatial joins and geometry validation', 'CRS transformation and area measurement', 'DynamoDB', 'MongoDB'],
+    evidence: ['ghana-cocoa-belt', 'asase-gis', 'file-service'],
   },
 ];
 

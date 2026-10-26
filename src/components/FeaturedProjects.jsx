@@ -62,7 +62,7 @@ const FeaturedProjects = memo(function FeaturedProjects() {
       label="Work"
       wide
       title="Selected projects"
-      lede="Each one covers a different part of the job: infrastructure, backend design, and a product people can use."
+      lede="Spatial analysis, backend design, cloud infrastructure, and product engineering—with the decisions and evidence behind each project."
     >
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
         {FEATURED_PROJECTS.map((project, i) => (

@@ -15,9 +15,9 @@ export const CONTACT_EMAIL = 'dogbeblessingkwame@gmail.com';
 export const SEO = {
   title: 'Blessing Edmund | Cloud & Backend Engineer',
   description:
-    'Cloud & Backend Engineer in Ghana building Python APIs (FastAPI & Django) and AWS infrastructure with Terraform, Docker, and CI/CD. Software Engineer at Afarinick Company Limited.',
+    'Cloud and backend engineer in Ghana building Python APIs and AWS infrastructure, with geospatial projects in QGIS, GeoDjango and PostGIS. Explore case studies and mapping work.',
   keywords:
-    'Software Engineer, Cloud Engineer, AWS, Terraform, Docker, FastAPI, Django, Python Developer, PostgreSQL, React, Linux, DevOps, CI/CD, GitHub Actions, Ghana, Portfolio',
+    'Software Engineer, Cloud Engineer, AWS, Terraform, Docker, FastAPI, Django, Python Developer, PostgreSQL, React, Linux, DevOps, CI/CD, GitHub Actions, Ghana, Portfolio, QGIS, PostGIS, GeoDjango, Geospatial',
   ogSiteName: 'Blessing Edmund Portfolio',
 };
 
