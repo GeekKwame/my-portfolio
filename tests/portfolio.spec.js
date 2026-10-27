@@ -53,10 +53,13 @@ test('city lights finish loading before rotation can be paused', async ({ page }
     nightLoaded = true;
   });
   await page.goto('/');
-  await expect(page.getByRole('button', { name: 'Pause rotation', exact: true })).toBeEnabled();
+  const pause = page.getByRole('button', { name: 'Pause rotation', exact: true });
+  await expect(pause).toBeEnabled();
   expect(nightLoaded).toBe(true);
+  // The stage fades in over 600ms. A screenshot taken during that fade will not match a later one.
+  await expect(page.locator('.globe-canvas')).toHaveCSS('opacity', '1');
   const canvas = page.locator('canvas');
-  await page.getByRole('button', { name: 'Pause rotation', exact: true }).click();
+  await pause.click();
   await page.waitForTimeout(300);
   const paused = await canvas.screenshot();
   await page.waitForTimeout(800);
