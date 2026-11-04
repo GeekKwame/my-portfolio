@@ -1,6 +1,8 @@
-import { memo, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createGlobeScene } from './globe/createGlobeScene';
 import GlobeFallback from './globe/GlobeFallback';
+import Link from './Link';
+import { ENGINEERING_WAYPOINTS } from '../config/constants';
 
 const LOOKS = [
   { id: 'day', label: 'True colour' }, { id: 'night', label: 'Night' },
@@ -15,6 +17,7 @@ const HeroGlobe = memo(function HeroGlobe() {
   const [selection, setSelection] = useState(null);
   const [countries, setCountries] = useState({ status: 'idle', items: [] });
   const [motion, setMotion] = useState({ paused: false, reduced: false });
+  const [activeWaypoint, setActiveWaypoint] = useState(ENGINEERING_WAYPOINTS[0]);
 
   // OrbitControls removes document listeners via getRootNode(). Dispose before React detaches the canvas.
   useLayoutEffect(() => {
@@ -25,6 +28,7 @@ const HeroGlobe = memo(function HeroGlobe() {
         onSelection: (value) => { if (active) setSelection(value); },
         onCountries: (state, items) => { if (active) setCountries({ status: state, items }); },
         onMotion: (paused, reduced) => { if (active) setMotion({ paused, reduced }); },
+        onWaypoint: (wp) => { if (active && wp) setActiveWaypoint(wp); },
       });
     } catch {
       // Defer state update out of synchronous effect setup, including StrictMode's trial mount.
@@ -33,17 +37,39 @@ const HeroGlobe = memo(function HeroGlobe() {
     return () => { active = false; apiRef.current?.destroy(); apiRef.current = null; };
   }, []);
 
+  useEffect(() => {
+    const onExternalFocus = (event) => {
+      const id = event.detail?.waypointId;
+      if (id && apiRef.current) {
+        if (look === 'countries') {
+          setLook('day');
+          apiRef.current.applyLook('day');
+        }
+        apiRef.current.focusWaypoint(id);
+      }
+    };
+    window.addEventListener('globe:focus-waypoint', onExternalFocus);
+    return () => window.removeEventListener('globe:focus-waypoint', onExternalFocus);
+  }, [look]);
+
   const unavailable = status === 'unavailable';
   const ready = status === 'ready' || status === 'layer-error';
   function changeLook(id) {
     setLook(id);
     apiRef.current?.applyLook(id);
   }
+  function selectWaypoint(id) {
+    if (look === 'countries') {
+      setLook('day');
+      apiRef.current?.applyLook('day');
+    }
+    apiRef.current?.focusWaypoint(id);
+  }
 
   return (
     <div className="globe-experience">
       <div className="globe-caption" aria-hidden="true">
-        <span>Our shared perspective</span><span>01 / Earth</span>
+        <span>Engineering telemetry · Geodesic view</span><span>01 / Earth</span>
       </div>
       <div className="hero-globe-stage relative mx-auto aspect-square w-full">
         {!ready && <GlobeFallback message={unavailable ? 'A quieter view of our world.' : 'Preparing the Earth…'} />}
@@ -51,7 +77,8 @@ const HeroGlobe = memo(function HeroGlobe() {
       </div>
       <div className="globe-location">
         <span className="globe-location-dot" aria-hidden="true" />
-        <span>Accra, Ghana</span><span className="text-ink-muted">5.60° N / 0.19° W</span>
+        <span className="font-medium text-ink">{activeWaypoint.title.split(' · ')[0]}</span>
+        <span className="font-mono text-[0.72rem] text-ink-muted">{activeWaypoint.coords}</span>
       </div>
       {unavailable ? (
         <p className="mt-4 text-center text-sm text-ink-muted" role="status">Interactive Earth is unavailable. You can still explore all my work below.</p>
@@ -72,7 +99,47 @@ const HeroGlobe = memo(function HeroGlobe() {
             <button type="button" disabled={!ready} onClick={() => apiRef.current?.reset()}>Reset view</button>
             <button type="button" disabled={!ready} onClick={() => apiRef.current?.rotate(0.2)} aria-label="Rotate Earth right">→</button>
           </div>
-          <p className="mt-2 text-center text-xs text-ink-muted">Drag sideways or use arrow keys to explore.</p>
+          <p className="mt-1.5 text-center text-xs text-ink-muted">Drag sideways or use arrow keys to explore.</p>
+
+          {look !== 'countries' && (
+            <div className="mt-3 rounded-xl border border-rule bg-paper-raised p-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-ink-muted">Footprint waypoints</span>
+                <span className="font-mono text-[0.6875rem] text-accent-strong">{activeWaypoint.role}</span>
+              </div>
+              <div className="mt-2 flex flex-wrap gap-1.5" role="group" aria-label="Engineering footprint waypoints">
+                {ENGINEERING_WAYPOINTS.map((wp) => {
+                  const isCurrent = activeWaypoint.id === wp.id;
+                  return (
+                    <button
+                      key={wp.id}
+                      type="button"
+                      disabled={!ready}
+                      aria-pressed={isCurrent}
+                      onClick={() => selectWaypoint(wp.id)}
+                      className={`min-h-[34px] rounded-lg border px-2.5 py-1 font-mono text-[0.6875rem] font-medium transition-colors ${
+                        isCurrent
+                          ? 'border-ink bg-ink text-paper'
+                          : 'border-rule-strong bg-paper text-ink-muted hover:border-ink/50 hover:text-ink'
+                      }`}
+                    >
+                      {wp.shortLabel}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="mt-2.5 border-t border-rule pt-2.5 text-xs leading-relaxed text-ink-soft">
+                <p>{activeWaypoint.summary}</p>
+                <div className="mt-1.5 flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-mono text-[0.6875rem] text-ink-muted">{activeWaypoint.stack}</span>
+                  <Link to={activeWaypoint.href} className="link font-medium text-ink">
+                    {activeWaypoint.linkLabel} <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
           {look === 'countries' && (
             <div className="mt-4">
               <label htmlFor="globe-country" className="sr-only">Explore a country</label>

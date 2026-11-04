@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import Figure from '../components/Figure';
 import Tags from '../components/Tags';
 import ProjectLinks from '../components/ProjectLinks';
+import ArchitectureLab from '../components/ArchitectureLab';
 import useDocumentMeta from '../hooks/useDocumentMeta';
+import { ARCHITECTURE_TRACES } from '../data/architectureTraces';
 import {
   ADDITIONAL_PROJECTS,
   FEATURED_PROJECTS,
@@ -30,6 +32,8 @@ function meta(project) {
 }
 
 function CaseStudy({ project, number }) {
+  const [showTrace, setShowTrace] = useState(false);
+  const hasTrace = Boolean(ARCHITECTURE_TRACES[project.slug]);
   const titleId = `${project.slug}-title`;
   const rows = [
     ['Problem', project.problem],
@@ -51,12 +55,34 @@ function CaseStudy({ project, number }) {
           </h3>
           <p className="mt-3 text-lg leading-relaxed text-ink-soft">{project.summary}</p>
         </div>
-        <ProjectLinks project={project} />
+        <div className="flex flex-wrap items-center gap-3">
+          {hasTrace && (
+            <button
+              type="button"
+              aria-pressed={showTrace}
+              onClick={() => setShowTrace((v) => !v)}
+              className={`min-h-[42px] rounded-full border px-4 font-mono text-xs font-semibold transition-colors ${
+                showTrace
+                  ? 'border-ink bg-ink text-paper'
+                  : 'border-rule-strong bg-paper-raised text-ink hover:border-ink/50'
+              }`}
+            >
+              {showTrace ? 'Hide interactive trace' : 'Interactive request trace ▸'}
+            </button>
+          )}
+          <ProjectLinks project={project} />
+        </div>
       </header>
+
+      {showTrace && hasTrace && (
+        <div className="mt-8">
+          <ArchitectureLab lockedSlug={project.slug} />
+        </div>
+      )}
 
       {project.image && (
         <div className="mt-8">
-          <Figure image={project.image} number={String(number).padStart(2, '0')} />
+          <Figure image={project.image} number={String(number).padStart(2, '0')} eager={number === 1} />
         </div>
       )}
 

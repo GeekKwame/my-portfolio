@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { PERSONAL_INFO, NAVIGATION_LINKS, RESUME, SOCIAL_LINKS } from '../config/constants';
 import { trackResumeDownload, trackSocialClick } from '../utils/analytics';
-import { ROUTES } from '../routing/navigation';
+import { ROUTES, openCommandPalette } from '../routing/navigation';
 import ThemeToggle from './ThemeToggle';
 import Link from './Link';
 
@@ -151,7 +151,18 @@ function NavBar({ path }) {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <button
+            type="button"
+            onClick={openCommandPalette}
+            aria-label="Open command palette"
+            title="Search projects, stack, and actions (⌘K)"
+            className="hidden md:inline-flex items-center gap-2 min-h-[40px] rounded-full border border-rule-strong bg-paper-raised px-3.5 text-xs font-medium text-ink-muted transition-colors hover:border-ink/40 hover:text-ink"
+          >
+            <span>Quick jump</span>
+            <kbd className="rounded bg-paper-sunk px-1.5 py-0.5 font-mono text-[0.6875rem] text-ink">⌘K</kbd>
+          </button>
+
           <a
             href={RESUME.path}
             target="_blank"
@@ -208,6 +219,16 @@ function NavBar({ path }) {
             </ol>
 
             <ul className="mt-8 space-y-1 text-[0.9375rem]">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => { close(false); openCommandPalette(); }}
+                  className="flex w-full min-h-[44px] items-center justify-between text-ink"
+                >
+                  <span>Command palette &amp; search</span>
+                  <kbd className="rounded border border-rule px-2 py-0.5 font-mono text-xs text-ink-muted">⌘K</kbd>
+                </button>
+              </li>
               <li>
                 <a href={RESUME.path} target="_blank" rel="noopener noreferrer"
                   onClick={() => { trackResumeDownload(); close(false); }}

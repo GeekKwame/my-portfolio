@@ -6,6 +6,7 @@ import ScrollProgress from "./components/ScrollProgress";
 import SkipToContent from "./components/SkipToContent";
 import StructuredData from "./components/StructuredData";
 import ErrorBoundary from "./components/ErrorBoundary";
+import CommandPalette from "./components/CommandPalette";
 import HomePage from "./pages/HomePage";
 import ProjectsPage from "./pages/ProjectsPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -36,6 +37,7 @@ function App({ initialPath }) {
           <SkipToContent />
           <ScrollProgress />
           <NavBar path={path} />
+          <CommandPalette path={path} />
           <main id="main" tabIndex={-1} className="outline-none">
             <Page key={path} />
           </main>

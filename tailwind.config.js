@@ -14,7 +14,7 @@ module.exports = {
       fontFamily: {
         display: ['"Cal Sans"', '"Inter Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         sans: ['"Inter Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['"Inter Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', 'monospace'],
       },
       colors: {
         paper: {
