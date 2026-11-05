@@ -56,7 +56,7 @@ function CaseStudy({ project, number }) {
 
       {project.image && (
         <div className="mt-8">
-          <Figure image={project.image} number={String(number).padStart(2, '0')} />
+          <Figure image={project.image} number={String(number).padStart(2, '0')} eager={number === 1} />
         </div>
       )}
 

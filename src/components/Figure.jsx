@@ -20,7 +20,7 @@ function Figure({ image, number, compact = false, eager = false }) {
       <button
         type="button"
         onClick={open}
-        className={`group relative block w-full border border-rule-strong overflow-hidden cursor-zoom-in ${
+        className={`group relative block w-full rounded-xl border border-rule-strong overflow-hidden cursor-zoom-in ${
           isDiagram ? 'bg-white' : 'bg-paper-sunk'
         }`}
         aria-label={`Enlarge figure ${number}: ${image.caption}`}

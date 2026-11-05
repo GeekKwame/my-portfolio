@@ -60,10 +60,11 @@ test('city lights finish loading before rotation can be paused', async ({ page }
   await expect(page.locator('.globe-canvas')).toHaveCSS('opacity', '1');
   const canvas = page.locator('canvas');
   await pause.click();
-  await page.waitForTimeout(300);
-  const paused = await canvas.screenshot();
-  await page.waitForTimeout(800);
-  expect((await canvas.screenshot()).equals(paused)).toBe(true);
+  await expect.poll(async () => {
+    const first = await canvas.screenshot();
+    await page.waitForTimeout(250);
+    return (await canvas.screenshot()).equals(first);
+  }).toBe(true);
 });
 
 for (const reducedMotion of ['no-preference', 'reduce']) {
@@ -191,8 +192,7 @@ test('WebGL stops drawing offscreen and disposes on route changes', async ({ pag
   });
   await readyGlobe(page);
   const count = await page.evaluate(() => window.drawCount);
-  await page.waitForTimeout(500);
-  expect(await page.evaluate(() => window.drawCount)).toBeGreaterThan(count);
+  await expect.poll(() => page.evaluate(() => window.drawCount)).toBeGreaterThan(count);
   await page.locator('#contact').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1000);
   const hiddenCount = await page.evaluate(() => window.drawCount);

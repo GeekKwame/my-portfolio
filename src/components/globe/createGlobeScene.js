@@ -11,10 +11,15 @@ const WHITE = new THREE.Color('#ffffff');
 /** Owns every WebGL resource and listener. React only receives UI state changes. */
 export function createGlobeScene(container, { onStatus, onCountries, onSelection, onMotion }) {
   const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
-  const lowPower = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
+  const baseLowPower = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
   // Construct first: unsupported WebGL fails before any library animation or fetch starts.
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !lowPower, powerPreference: 'low-power' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, lowPower ? 1.25 : 1.75));
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !baseLowPower, powerPreference: 'low-power' });
+  const gl = renderer.getContext?.();
+  const debugExt = gl?.getExtension?.('WEBGL_debug_renderer_info');
+  const glRenderer = String((debugExt ? gl.getParameter(debugExt.UNMASKED_RENDERER_WEBGL) : gl?.getParameter?.(gl.RENDERER)) || '');
+  const softwareGl = /SwiftShader|llvmpipe|Software|Subzero/i.test(glRenderer);
+  const lowPower = baseLowPower || softwareGl;
+  renderer.setPixelRatio(softwareGl ? 1 : Math.min(devicePixelRatio || 1, lowPower ? 1.25 : 1.75));
   renderer.setClearColor(0x000000, 0);
   const canvas = renderer.domElement;
   canvas.setAttribute('aria-label', 'Earth. Arrow keys rotate; Home returns to Accra.');
@@ -224,11 +229,29 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     }
     return null;
   }
+  function renderNow() {
+    if (!canRender()) return;
+    cancelAnimationFrame(frame);
+    frame = 0;
+    // Flush any residual drag delta before a paused/reduced-motion render.
+    // OrbitControls emits a change event from update(), so cancel that queued frame too.
+    const damping = controls.enableDamping;
+    controls.enableDamping = false;
+    controls.update();
+    controls.enableDamping = damping;
+    cancelAnimationFrame(frame);
+    frame = 0;
+    uniforms.sunDirection.value.copy(sun.position).applyQuaternion(camera.quaternion).add(camera.position).normalize();
+    pulse.scale.setScalar(1);
+    pulse.material.opacity = 0.5;
+    globe.setPointOfView(camera);
+    renderer.render(scene, camera);
+  }
   function render(time) {
     frame = 0;
     if (!canRender()) return;
     const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
-    // Mobile renders at most 30 fps. Timestamp-based rotation is refresh-rate independent.
+    // Mobile and software rasterizers render at most 30 fps, including camera flights.
     if (lowPower && lastTime && time - lastTime < 1000 / 30 - 1) { invalidate(); return; }
     lastTime = time;
     controls.update(dt);
@@ -280,7 +303,12 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     globe.rotation.y = 0;
     controls.reset();
     resumeAt = performance.now() + 5000;
-    invalidate(500);
+    if (paused || reduced) {
+      settleUntil = 0;
+      renderNow();
+    } else {
+      invalidate(500);
+    }
   }
   function rotate(horizontal, vertical = 0) {
     countryFlight = null;
@@ -290,19 +318,34 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     camera.position.setFromSpherical(spherical);
     controls.update();
     resumeAt = performance.now() + 5000;
-    invalidate(500);
+    if (paused || reduced) {
+      settleUntil = 0;
+      renderNow();
+    } else {
+      invalidate(500);
+    }
   }
   function toggleMotion() {
     paused = !paused;
     onMotion(paused || reduced, reduced);
-    invalidate();
+    if (paused || reduced) {
+      settleUntil = 0;
+      renderNow();
+    } else {
+      invalidate();
+    }
   }
   function onMotionChange(event) {
     reduced = event.matches;
     paused = reduced; // Explicit system preference always takes precedence.
     controls.enableDamping = !reduced;
     onMotion(paused, reduced);
-    invalidate();
+    if (paused) {
+      settleUntil = 0;
+      renderNow();
+    } else {
+      invalidate();
+    }
   }
   const onStart = () => { countryFlight = null; interacting = true; invalidate(); };
   const onEnd = () => { interacting = false; resumeAt = performance.now() + 5000; invalidate(800); };

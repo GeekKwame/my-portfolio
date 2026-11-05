@@ -43,7 +43,7 @@ const Contact = memo(function Contact() {
         <a
           href={`mailto:${PERSONAL_INFO.email}`}
           onClick={() => trackSocialClick('email_contact')}
-          className="font-display text-paper-raised text-[clamp(1.375rem,0.9rem+2.3vw,2.5rem)] leading-tight break-all
+          className="font-display text-paper-raised text-[clamp(1.125rem,0.8rem+2.2vw,2.5rem)] leading-tight break-words [overflow-wrap:anywhere]
             underline decoration-paper/30 decoration-1 underline-offset-[6px] hover:text-accent-light hover:decoration-accent-light transition-colors"
         >
           {PERSONAL_INFO.email}

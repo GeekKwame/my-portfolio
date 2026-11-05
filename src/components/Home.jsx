@@ -13,7 +13,9 @@ const Home = memo(function Home() {
             <h1 className="hero-title text-rise">Blessing<br />Edmund<span className="text-accent">.</span></h1>
             <p className="hero-position text-rise">Thoughtful software.<br /><span className="text-ink-muted">Solid foundations.</span></p>
             <p className="text-rise mt-5 max-w-[43ch] text-base sm:text-lg leading-relaxed text-ink-soft">{PERSONAL_INFO.intro}</p>
-            <p className="mt-5 text-sm text-ink-muted">Backend engineering <span className="mx-2 text-accent" aria-hidden="true">/</span> Cloud infrastructure</p>
+            <p className="mt-5 text-sm text-ink-muted">
+              Backend engineering <span className="mx-2 text-accent" aria-hidden="true">/</span> Cloud infrastructure <span className="mx-2 text-accent" aria-hidden="true">/</span> Geospatial systems
+            </p>
             <div className="text-rise mt-8 flex flex-wrap gap-3">
               <a href="#work" className="btn-primary">Explore projects <span aria-hidden="true">↘</span></a>
               <a href={github.url} target="_blank" rel="noopener noreferrer" className="btn-secondary" aria-label="View GitHub (opens in a new tab)">View GitHub <span aria-hidden="true">↗</span></a>
