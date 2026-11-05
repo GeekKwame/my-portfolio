@@ -1,52 +1,15 @@
 import * as THREE from 'three';
 import ThreeGlobe from 'three-globe';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { HOME_BASE, ENGINEERING_WAYPOINTS } from '../../config/constants';
+import { HOME_BASE } from '../../config/constants';
 import { createEarthMaterial } from './earthMaterial';
 import { applyCapStyle, baseCapStyle, countryFocus, findPolygonFeature, forEachPolygonMesh, summarizeCountry } from './countries';
 
 const GREEN = new THREE.Color('#7ee7b4');
-const CYAN = new THREE.Color('#67e8f9');
 const WHITE = new THREE.Color('#ffffff');
 
-function buildGeodesicArc(globe, from, to, isSelected) {
-  const start = globe.getCoords(from.lat, from.lng, 0.018);
-  const end = globe.getCoords(to.lat, to.lng, 0.018);
-  const vStart = new THREE.Vector3(start.x, start.y, start.z);
-  const vEnd = new THREE.Vector3(end.x, end.y, end.z);
-  const radius = vStart.length();
-  const nStart = vStart.clone().normalize();
-  const nEnd = vEnd.clone().normalize();
-  const angle = nStart.angleTo(nEnd);
-  const peak = Math.min(0.22, Math.max(0.04, angle * 0.2));
-  const segments = 20;
-  const points = [];
-  const q = new THREE.Quaternion().setFromUnitVectors(nStart, nEnd);
-  const stepQ = new THREE.Quaternion();
-  const ident = new THREE.Quaternion();
-
-  for (let i = 0; i <= segments; i += 1) {
-    const t = i / segments;
-    stepQ.slerpQuaternions(ident, q, t);
-    const dir = nStart.clone().applyQuaternion(stepQ).normalize();
-    const alt = 1 + Math.sin(t * Math.PI) * peak;
-    points.push(dir.multiplyScalar(radius * alt));
-  }
-
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  const material = new THREE.LineBasicMaterial({
-    color: isSelected ? GREEN : CYAN,
-    transparent: true,
-    opacity: isSelected ? 0.88 : 0.34,
-    depthWrite: false,
-  });
-  const line = new THREE.Line(geometry, material);
-  line.userData.waypointId = to.id;
-  return line;
-}
-
 /** Owns every WebGL resource and listener. React only receives UI state changes. */
-export function createGlobeScene(container, { onStatus, onCountries, onSelection, onMotion, onWaypoint }) {
+export function createGlobeScene(container, { onStatus, onCountries, onSelection, onMotion }) {
   const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
   const baseLowPower = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
   // Construct first: unsupported WebGL fails before any library animation or fetch starts.
@@ -123,80 +86,13 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
   clouds.visible = false;
   globe.add(clouds);
   const pulse = new THREE.Mesh(
-    new THREE.RingGeometry(1.0, 1.32, 32),
-    new THREE.MeshBasicMaterial({ color: GREEN, transparent: true, opacity: 0.65, side: THREE.DoubleSide, depthWrite: false }),
+    new THREE.RingGeometry(1.0, 1.25, 32),
+    new THREE.MeshBasicMaterial({ color: GREEN, transparent: true, opacity: 0.6, side: THREE.DoubleSide, depthWrite: false }),
   );
-  function positionSurfaceRing(mesh, lat, lng, altitude = 0.024) {
-    const coords = globe.getCoords(lat, lng, altitude);
-    mesh.position.set(coords.x, coords.y, coords.z);
-    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), mesh.position.clone().normalize());
-  }
-  positionSurfaceRing(pulse, HOME_BASE.lat, HOME_BASE.lng, 0.025);
+  const marker = globe.getCoords(HOME_BASE.lat, HOME_BASE.lng, 0.025);
+  pulse.position.set(marker.x, marker.y, marker.z);
+  pulse.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), pulse.position.clone().normalize());
   globe.add(pulse);
-
-  // Verified engineering footprint: geodesic telemetry arcs and surface markers.
-  const footprintGroup = new THREE.Group();
-  const waypointArcs = [];
-  const waypointDots = [];
-  ENGINEERING_WAYPOINTS.forEach((wp) => {
-    const dot = new THREE.Mesh(
-      new THREE.RingGeometry(wp.isHome ? 0.35 : 0.28, wp.isHome ? 0.72 : 0.58, 16),
-      new THREE.MeshBasicMaterial({
-        color: wp.isHome ? GREEN : CYAN,
-        transparent: true,
-        opacity: wp.isHome ? 0.9 : 0.65,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      }),
-    );
-    dot.userData.waypointId = wp.id;
-    positionSurfaceRing(dot, wp.lat, wp.lng, 0.02);
-    footprintGroup.add(dot);
-    waypointDots.push(dot);
-
-    if (!wp.isHome) {
-      const arc = buildGeodesicArc(globe, HOME_BASE, wp, false);
-      footprintGroup.add(arc);
-      waypointArcs.push(arc);
-    }
-  });
-  globe.add(footprintGroup);
-
-  function highlightWaypoint(waypointId) {
-    waypointArcs.forEach((arc) => {
-      const active = arc.userData.waypointId === waypointId;
-      arc.material.color.copy(active ? GREEN : CYAN);
-      arc.material.opacity = active ? 0.92 : 0.34;
-    });
-    waypointDots.forEach((dot) => {
-      const active = dot.userData.waypointId === waypointId || (waypointId === 'accra' && dot.userData.waypointId === 'accra');
-      dot.material.color.copy(active ? GREEN : CYAN);
-      dot.material.opacity = active ? 0.95 : 0.6;
-    });
-    const target = ENGINEERING_WAYPOINTS.find((w) => w.id === waypointId) || ENGINEERING_WAYPOINTS[0];
-    positionSurfaceRing(pulse, target.lat, target.lng, 0.025);
-  }
-
-  function focusWaypoint(waypointId) {
-    const target = ENGINEERING_WAYPOINTS.find((w) => w.id === waypointId);
-    if (!target) return;
-    highlightWaypoint(target.id);
-    onWaypoint?.(target);
-    controls.enableDamping = false;
-    controls.update();
-    controls.enableDamping = !reduced;
-    const latOffset = target.isHome ? target.lat + 6 : target.lat;
-    const lngOffset = target.isHome ? target.lng + 9 : target.lng;
-    const pos = globe.getCoords(latOffset, lngOffset, 2.35);
-    const destination = globe.localToWorld(new THREE.Vector3(pos.x, pos.y, pos.z));
-    countryFlight = {
-      start: camera.position.clone(),
-      turn: new THREE.Quaternion().setFromUnitVectors(camera.position.clone().normalize(), destination.normalize()),
-      started: performance.now(),
-    };
-    resumeAt = performance.now() + 6000;
-    invalidate(200);
-  }
 
   const home = globe.getCoords(HOME_BASE.lat + 6, HOME_BASE.lng + 9, 2.35);
   camera.position.set(home.x, home.y, home.z);
@@ -291,8 +187,6 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     uniforms.nightView.value = next === 'night' ? 1 : 0;
     uniforms.countryView.value = next === 'countries' ? 1 : 0;
     clouds.visible = false;
-    footprintGroup.visible = next !== 'countries';
-    pulse.visible = next !== 'countries';
     globe.polygonsData([]);
     onStatus('ready');
     invalidate(150);
@@ -339,7 +233,14 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     if (!canRender()) return;
     cancelAnimationFrame(frame);
     frame = 0;
+    // Flush any residual drag delta before a paused/reduced-motion render.
+    // OrbitControls emits a change event from update(), so cancel that queued frame too.
+    const damping = controls.enableDamping;
+    controls.enableDamping = false;
     controls.update();
+    controls.enableDamping = damping;
+    cancelAnimationFrame(frame);
+    frame = 0;
     uniforms.sunDirection.value.copy(sun.position).applyQuaternion(camera.quaternion).add(camera.position).normalize();
     pulse.scale.setScalar(1);
     pulse.material.opacity = 0.5;
@@ -350,8 +251,8 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     frame = 0;
     if (!canRender()) return;
     const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
-    // Mobile and software rasterizers render at most 30 fps during ambient rotation.
-    if (lowPower && !countryFlight && time >= settleUntil && lastTime && time - lastTime < 1000 / 30 - 1) { invalidate(); return; }
+    // Mobile and software rasterizers render at most 30 fps, including camera flights.
+    if (lowPower && lastTime && time - lastTime < 1000 / 30 - 1) { invalidate(); return; }
     lastTime = time;
     controls.update(dt);
     if (countryFlight) {
@@ -401,8 +302,6 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
     countryFlight = null;
     globe.rotation.y = 0;
     controls.reset();
-    highlightWaypoint('accra');
-    onWaypoint?.(ENGINEERING_WAYPOINTS[0]);
     resumeAt = performance.now() + 5000;
     if (paused || reduced) {
       settleUntil = 0;
@@ -519,7 +418,7 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
   });
 
   return {
-    applyLook, reset, rotate, toggleMotion, focusWaypoint,
+    applyLook, reset, rotate, toggleMotion,
     selectCountry: (index) => selectCountry(countries[index], true),
     clearSelection: () => selectCountry(null),
     destroy() {

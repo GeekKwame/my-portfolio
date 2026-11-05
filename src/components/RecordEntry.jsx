@@ -7,11 +7,11 @@ function RecordEntry({ title, organization, type, duration, location, isCurrent,
   return (
     <li className="group py-9">
       <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-        <div className="grayscale-hover flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-rule-strong bg-[#f3f6f5] p-1.5 shadow-sm">
+        <div className="grayscale-hover flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-rule bg-white p-1.5">
           {logo && !logoFailed ? (
-            <img src={logo} alt="" width="60" height="60" loading="eager" decoding="async" className="h-full w-full object-contain" onError={() => setLogoFailed(true)} />
+            <img src={logo} alt="" width="60" height="60" loading="lazy" decoding="async" className="h-full w-full object-contain" onError={() => setLogoFailed(true)} />
           ) : (
-            <span aria-hidden="true" className="font-mono text-[0.6875rem] font-semibold text-neutral-700">{logoText}</span>
+            <span aria-hidden="true" className="font-mono text-[0.6875rem] text-neutral-500">{logoText}</span>
           )}
         </div>
         <div className="min-w-0 flex-1">
@@ -32,10 +32,10 @@ function RecordEntry({ title, organization, type, duration, location, isCurrent,
           </p>
         </div>
         <div className="w-full sm:w-auto sm:text-right">
-          <p className="font-mono text-sm font-semibold leading-tight text-ink">
+          <p className="font-mono text-[0.9375rem] font-semibold leading-tight text-ink">
             {duration}
           </p>
-          <p className="font-mono text-xs text-ink-muted mt-1">{location}</p>
+          <p className="text-sm text-ink-muted mt-1">{location}</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@ function RecordEntry({ title, organization, type, duration, location, isCurrent,
         )}
 
         {skills?.length > 0 && (
-          <p className="stack mt-5 font-mono text-xs">{skills.join(' · ')}</p>
+          <p className="stack mt-5">{skills.join(' · ')}</p>
         )}
       </div>
     </li>

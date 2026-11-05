@@ -122,22 +122,12 @@
     @apply max-w-content mx-auto px-5 sm:px-8 lg:px-12;
   }
 
-  /* First-viewport plane: soft atmosphere and architectural coordinate grid */
+  /* First-viewport plane: soft atmosphere so the globe sits in the composition */
   .hero-plane {
-    background-color: rgb(var(--paper));
-  }
-
-  .hero-plane::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
     background:
-      radial-gradient(ellipse 68% 54% at 78% 36%, rgb(var(--accent) / 0.06), transparent 62%),
       radial-gradient(ellipse 70% 55% at 82% 38%, rgb(var(--paper-sunk) / 0.95), transparent 58%),
       radial-gradient(ellipse 45% 35% at 12% 72%, rgb(var(--paper-raised)), transparent 55%),
-      linear-gradient(to right, rgb(var(--rule) / 0.26) 1px, transparent 1px) 0 0 / 4.5rem 4.5rem,
-      linear-gradient(to bottom, rgb(var(--rule) / 0.26) 1px, transparent 1px) 0 0 / 4.5rem 4.5rem;
+      rgb(var(--paper));
   }
 
   .hero-globe-stage::before {
@@ -325,7 +315,7 @@
   .globe-status { min-height: 1.25rem; margin-top: .5rem; font-size: .75rem; text-align: center; color: rgb(var(--ink-muted)); }
   .globe-select { width: 100%; min-height: 44px; padding: .5rem .75rem; border: 1px solid rgb(var(--rule-strong)); border-radius: .5rem; background: rgb(var(--paper)); color: rgb(var(--ink)); font-size: .8125rem; }
   .globe-fallback { position: absolute; inset: 0; display: grid; place-items: center; }
-  .globe-fallback-sphere { width: 100%; aspect-ratio: 1; border-radius: 50%; background: url('/earth-fallback.webp') center / contain no-repeat; filter: brightness(1.3) contrast(1.08); }
+  .globe-fallback-sphere { width: 100%; aspect-ratio: 1; border-radius: 50%; background: url('/earth-fallback.webp') center / contain no-repeat; }
   .globe-loading-note { position: absolute; bottom: 0; text-align: center; font-size: .75rem; color: rgb(var(--ink-muted)); }
   .globe-placeholder { padding-top: 29px; padding-bottom: 180px; }
 }

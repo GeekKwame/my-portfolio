@@ -60,10 +60,11 @@ test('city lights finish loading before rotation can be paused', async ({ page }
   await expect(page.locator('.globe-canvas')).toHaveCSS('opacity', '1');
   const canvas = page.locator('canvas');
   await pause.click();
-  await page.waitForTimeout(300);
-  const paused = await canvas.screenshot();
-  await page.waitForTimeout(800);
-  expect((await canvas.screenshot()).equals(paused)).toBe(true);
+  await expect.poll(async () => {
+    const first = await canvas.screenshot();
+    await page.waitForTimeout(250);
+    return (await canvas.screenshot()).equals(first);
+  }).toBe(true);
 });
 
 for (const reducedMotion of ['no-preference', 'reduce']) {
@@ -191,8 +192,7 @@ test('WebGL stops drawing offscreen and disposes on route changes', async ({ pag
   });
   await readyGlobe(page);
   const count = await page.evaluate(() => window.drawCount);
-  await page.waitForTimeout(500);
-  expect(await page.evaluate(() => window.drawCount)).toBeGreaterThan(count);
+  await expect.poll(() => page.evaluate(() => window.drawCount)).toBeGreaterThan(count);
   await page.locator('#contact').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1000);
   const hiddenCount = await page.evaluate(() => window.drawCount);
@@ -230,39 +230,4 @@ test('production HTML works without JavaScript and has route-specific metadata',
   await expect(page.locator('article')).toHaveCount(10);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://devedmund.vercel.app/projects');
   await context.close();
-});
-
-test('engineering waypoints, architecture request-flow lab, skills highlighter, and command palette', async ({ page }) => {
-  await readyGlobe(page);
-
-  // 1. Earth engineering footprint waypoints
-  await page.getByRole('button', { name: 'Western North · GIS', exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Western North · GIS', exact: true })).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('.globe-location')).toContainText('EPSG:32630');
-
-  // 2. Interactive System Architecture & Request-Flow Inspector
-  const lab = page.locator('#architecture-lab');
-  await lab.scrollIntoViewIfNeeded();
-  await expect(lab).toContainText('Multi-Tenant File Service API');
-  await lab.getByRole('button', { name: 'Cross-Tenant UUID Probe Defense', exact: true }).click();
-  await expect(lab).toContainText('404 Not Found · Zero Enumeration');
-  await lab.getByRole('button', { name: 'Next trace step' }).click();
-  await expect(lab).toContainText('Step 2 / 4');
-  await lab.getByRole('button', { name: /Event-Connect/ }).click();
-  await expect(lab).toContainText('23 AWS SAM Resources');
-
-  // 3. Skills domain highlighter
-  const skills = page.locator('#skills');
-  await skills.scrollIntoViewIfNeeded();
-  await skills.getByRole('button', { name: 'Ghana Cocoa Belt', exact: true }).click();
-  await expect(skills.getByRole('button', { name: 'Ghana Cocoa Belt', exact: true })).toHaveAttribute('aria-pressed', 'true');
-
-  // 4. Command palette (⌘K)
-  await page.keyboard.press('Control+k');
-  const dialog = page.getByRole('dialog', { name: 'Engineering command palette' });
-  await expect(dialog).toBeVisible();
-  await dialog.getByLabel(/Search projects/).fill('Terraform');
-  await expect(dialog.getByRole('option').first()).toBeVisible();
-  await page.keyboard.press('Escape');
-  await expect(dialog).toBeHidden();
 });

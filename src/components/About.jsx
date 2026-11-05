@@ -36,24 +36,8 @@ const About = memo(function About() {
       label="About"
       title="A systems mindset, from the ground up"
     >
-      <div className="grid items-start gap-10 sm:grid-cols-[minmax(0,15.5rem)_minmax(0,1fr)] sm:gap-14">
-        <div className="mx-auto w-full max-w-[15.5rem]">
-          <ScribblePortrait src={profilePic} alt={`Portrait of ${PERSONAL_INFO.name}`} className="w-full" />
-          <dl className="mt-5 rounded-xl border border-rule bg-paper-raised p-4 font-mono text-xs">
-            <div className="flex items-center justify-between border-b border-rule pb-2">
-              <dt className="text-ink-muted">Base</dt>
-              <dd className="font-semibold text-ink">{PERSONAL_INFO.location}</dd>
-            </div>
-            <div className="flex items-center justify-between border-b border-rule py-2">
-              <dt className="text-ink-muted">Foundation</dt>
-              <dd className="font-semibold text-ink">Applied Math</dd>
-            </div>
-            <div className="flex items-center justify-between pt-2">
-              <dt className="text-ink-muted">Focus</dt>
-              <dd className="font-semibold text-accent-strong">Cloud · API · GIS</dd>
-            </div>
-          </dl>
-        </div>
+      <div className="grid items-start gap-10 sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] sm:gap-14">
+        <ScribblePortrait src={profilePic} alt={`Portrait of ${PERSONAL_INFO.name}`} className="mx-auto w-full max-w-[15rem]" />
         <div className="space-y-5 max-w-prose text-[1.0625rem] leading-[1.7] text-ink-soft">
           <p className="font-semibold text-ink text-[clamp(1.125rem,1rem+0.6vw,1.375rem)] leading-snug">
             {PERSONAL_INFO.bio}
@@ -90,18 +74,12 @@ const About = memo(function About() {
       </div>
 
       <div className="mt-20 sm:mt-24">
-        <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-ink pb-4">
-          <h3 className="text-2xl text-ink">How I work</h3>
-          <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-muted">Engineering invariants</span>
-        </div>
-        <ol className="mt-6 grid gap-5 sm:grid-cols-2">
+        <h3 className="text-2xl text-ink border-b border-ink pb-4">How I work</h3>
+        <ol className="grid sm:grid-cols-2 sm:gap-x-10">
           {PRINCIPLES.map((item, i) => (
-            <li key={item.title} className="rounded-2xl border border-rule bg-paper-raised p-6 transition-colors hover:border-ink/40">
-              <div className="flex items-center justify-between">
-                <p className="font-mono text-xs font-semibold text-accent-strong">INV-0{i + 1}</p>
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
-              </div>
-              <h4 className="mt-3 text-[1.375rem] text-ink">{item.title}</h4>
+            <li key={item.title} className="border-b border-rule py-6">
+              <p className="font-mono text-meta text-accent-strong">{String(i + 1).padStart(2, '0')}</p>
+              <h4 className="mt-2 text-[1.375rem] text-ink">{item.title}</h4>
               <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-muted max-w-prose">{item.body}</p>
             </li>
           ))}

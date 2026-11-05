@@ -21,7 +21,7 @@ function Figure({ image, number, compact = false, eager = false }) {
         type="button"
         onClick={open}
         className={`group relative block w-full rounded-xl border border-rule-strong overflow-hidden cursor-zoom-in ${
-          isDiagram ? 'bg-[#f3f6f5]' : 'bg-paper-sunk'
+          isDiagram ? 'bg-white' : 'bg-paper-sunk'
         }`}
         aria-label={`Enlarge figure ${number}: ${image.caption}`}
       >

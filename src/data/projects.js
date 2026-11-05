@@ -105,7 +105,7 @@ export const PROJECTS = [
     focus: ['fullstack', 'backend'],
     status: 'Team project',
     summary: 'Appointment booking and a live virtual queue for the KNUST Students’ Clinic. Students book without a password and check in with a reference code.',
-    highlight: '468 backend tests and 34 Playwright end-to-end tests run in CI against a real MongoDB service.',
+    highlight: '468 backend tests and 37 Playwright end-to-end tests run in CI against a real MongoDB service.',
     image: {
       src: yencareImage,
       width: 1485,
@@ -121,9 +121,9 @@ export const PROJECTS = [
     decision:
       'Patients identify themselves with a reference code and phone number instead of an account. Because that code is effectively the only secret, check-in and queue-status requests are rate limited per client IP and reference code, returning HTTP 429.',
     evidence: [
-      '468 backend test cases across 40 files, plus 34 Playwright end-to-end tests.',
+      '468 backend test cases across 40 files, plus 37 Playwright end-to-end tests.',
       'Pull-request CI runs the backend suite against MongoDB 7 and builds the frontend; a second workflow runs Playwright against a replica set.',
-      'Built by a team of five; I wrote 121 of the 159 commits.',
+      'Built by a team of five; I authored 121 commits in the shared repository.',
     ],
     stack: ['React', 'Express', 'MongoDB', 'Mongoose', 'JWT', 'Playwright', 'GitHub Actions'],
     links: {

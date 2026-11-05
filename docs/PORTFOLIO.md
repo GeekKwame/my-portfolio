@@ -14,24 +14,20 @@ Two pages, prerendered at build time and enhanced by a small client-side router 
 
 ```
 src/
-├── App.jsx                      # providers, navbar, command palette, page switch, footer
-├── pages/                       # one file per route
-├── components/                  # sections and shared UI
-│   ├── FeaturedProjects.jsx     # homepage project cards + ArchitectureLab
-│   ├── ArchitectureLab.jsx      # interactive system topology & request-flow inspector
-│   ├── CommandPalette.jsx       # ⌘K / Ctrl+K keyboard search and quick actions
-│   ├── ProjectThumb.jsx         # fixed-ratio blueprint frame with text fallback
-│   ├── ProjectLinks.jsx         # live demo / source / map links
-│   ├── Link.jsx                 # internal link that routes without a reload
-│   └── ThemeToggle.jsx          # light/dark switch
-├── data/
-│   ├── projects.js              # all project content
-│   └── architectureTraces.js    # verified system topologies & request trace flows
-├── config/constants.js          # personal info, navigation, waypoints, SEO copy
-├── routing/navigation.js        # routes, navigate(), hash scrolling, command palette trigger
-├── theme/                       # theme provider and helpers
-└── hooks/                       # usePathname, useTheme, useDocumentMeta, useReveal
-public/theme-init.js             # applies the theme before first paint
+├── App.jsx                  # providers, navbar, page switch, footer
+├── pages/                   # one file per route
+├── components/              # sections and shared UI
+│   ├── FeaturedProjects.jsx # homepage project cards
+│   ├── ProjectThumb.jsx     # fixed-ratio image with a text fallback
+│   ├── ProjectLinks.jsx     # live demo / source links
+│   ├── Link.jsx             # internal link that routes without a reload
+│   └── ThemeToggle.jsx      # light/dark switch
+├── data/projects.js         # all project content
+├── config/constants.js      # personal info, navigation, SEO copy
+├── routing/navigation.js    # routes, navigate(), hash scrolling
+├── theme/                   # theme provider and helpers
+└── hooks/                   # usePathname, useTheme, useDocumentMeta, useReveal
+public/theme-init.js         # applies the theme before first paint
 ```
 
 ### Adding a page
