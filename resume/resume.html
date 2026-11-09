@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Blessing Edmund Kwame Dogbe — Resume</title>
+  <meta name="author" content="Blessing Edmund Kwame Dogbe" />
+  <meta name="description" content="Resume of Blessing Edmund Kwame Dogbe, cloud and backend engineer in Accra, Ghana." />
+  <style>
+    @font-face {
+      font-family: "Cal Sans";
+      src: url("../node_modules/@fontsource/cal-sans/files/cal-sans-latin-400-normal.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url("../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url("../node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+
+    :root {
+      --ink: #0a0a0a;
+      --soft: #262626;
+      --muted: #5c5c5c;
+      --rule: #e5e5e5;
+      --accent: #16654a;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      color: var(--ink);
+      font-family: Inter, "Noto Sans", sans-serif;
+      font-size: 9.15pt;
+      line-height: 1.38;
+      font-feature-settings: "kern" 1, "liga" 1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 62mm;
+      column-gap: 6mm;
+      align-items: end;
+      padding-bottom: 3.2mm;
+      border-bottom: 1.5px solid var(--ink);
+    }
+
+    .kicker {
+      margin: 0 0 1.6mm;
+      font-size: 7.6pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Cal Sans", Inter, sans-serif;
+      font-weight: 400;
+      font-size: 18.5pt;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    h1 .dot { color: var(--accent); }
+
+    .role {
+      margin: 1.8mm 0 0;
+      font-size: 11pt;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .legal {
+      margin: 0.7mm 0 0;
+      color: var(--muted);
+      font-size: 8.4pt;
+    }
+
+    .contacts {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      text-align: right;
+      font-size: 8.3pt;
+      line-height: 1.48;
+    }
+
+    .summary {
+      margin: 3.2mm 0 0;
+      color: var(--soft);
+      font-size: 9.5pt;
+      line-height: 1.42;
+    }
+
+    section { margin-top: 3.6mm; }
+
+    h2 {
+      margin: 0 0 1.6mm;
+      padding-bottom: 1mm;
+      border-bottom: 1px solid var(--ink);
+      font-size: 7.6pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .skills { margin: 0; }
+    .skills div {
+      display: grid;
+      grid-template-columns: 24mm minmax(0, 1fr);
+      column-gap: 3mm;
+      padding: 0.7mm 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .skills dt { margin: 0; font-weight: 650; }
+    .skills dd { margin: 0; color: var(--soft); }
+
+    article {
+      padding: 1.35mm 0 1.45mm;
+      border-bottom: 1px solid var(--rule);
+      break-inside: avoid;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 5mm;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 10.4pt;
+      font-weight: 670;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .when {
+      flex: none;
+      font-variant-numeric: tabular-nums;
+      font-size: 8.2pt;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .org {
+      margin: 0.25mm 0 0;
+      color: var(--muted);
+      font-size: 8.3pt;
+    }
+
+    ul.bullets {
+      margin: 0.9mm 0 0;
+      padding: 0 0 0 3.2mm;
+    }
+    ul.bullets li { margin: 0.15mm 0; }
+    ul.bullets li::marker { color: var(--accent); }
+
+    .earlier { margin-top: 1.6mm; break-inside: avoid; }
+    .earlier article { padding: 0.85mm 0; }
+    .earlier h3 { font-size: 9.4pt; }
+    .earlier p { margin: 0.15mm 0 0; }
+
+    .projects { margin-top: 3.6mm; }
+    .projects article:last-of-type { border-bottom: 0; }
+
+    .link { color: var(--accent); font-weight: 600; }
+
+    .more {
+      margin: 1mm 0 0;
+      padding-top: 1.2mm;
+      border-top: 1px solid var(--rule);
+    }
+    .more p { margin: 0.45mm 0; }
+    .more strong { font-weight: 650; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      column-gap: 7mm;
+      margin-top: 3.4mm;
+      break-inside: avoid;
+    }
+    .split section { margin-top: 0; }
+    .split article { padding: 1.3mm 0 1.4mm; }
+    .split article:last-child { border-bottom: 0; }
+    .split h3 { font-size: 9.6pt; }
+
+    .certs { margin: 0; padding: 0; list-style: none; }
+    .certs li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 3mm;
+      align-items: baseline;
+      padding: 0.85mm 0;
+      border-bottom: 1px solid var(--rule);
+      break-inside: avoid;
+    }
+    .certs li:last-child { border-bottom: 0; }
+    .certs a { color: var(--accent); font-weight: 600; }
+    .cert-by { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <p class="kicker">Software engineer · Accra, Ghana</p>
+      <h1>Blessing Edmund Kwame Dogbe<span class="dot">.</span></h1>
+      <p class="role">Cloud &amp; Backend Engineer</p>
+      <p class="legal">Open to full-time roles, remote or Accra</p>
+    </div>
+    <ul class="contacts">
+      <li><a href="tel:+233536064409">+233 536 064 409</a></li>
+      <li><a href="mailto:dogbeblessingkwame@gmail.com">dogbeblessingkwame@gmail.com</a></li>
+      <li><a href="https://www.linkedin.com/in/edmund-blessing/">linkedin.com/in/edmund-blessing</a></li>
+      <li><a href="https://github.com/GeekKwame">github.com/GeekKwame</a></li>
+      <li><a href="https://devedmund.vercel.app/">devedmund.vercel.app</a></li>
+    </ul>
+  </header>
+
+  <p class="summary">
+    I build Python backends and the AWS infrastructure they run on: declared in Terraform or AWS SAM, deployed through CI/CD, and tested before they ship. Software engineer at Afarinick in Accra. The work behind the portfolio includes a multi-tenant FastAPI service on ECS Fargate, a serverless registration system where CloudFront is the only public entry point, and a clinic product with hundreds of tests running in CI.
+  </p>
+
+  <section>
+    <h2>Skills</h2>
+    <dl class="skills">
+      <div>
+        <dt>Cloud</dt>
+        <dd>Terraform, AWS SAM, ECS Fargate, Lambda, API Gateway, S3, CloudFront (OAC), VPC, ALB, WAF</dd>
+      </div>
+      <div>
+        <dt>Backend</dt>
+        <dd>Python, FastAPI, Django, Node.js, Express, SQLAlchemy 2.0, Pydantic, REST, auth, rate limiting</dd>
+      </div>
+      <div>
+        <dt>Delivery</dt>
+        <dd>GitHub Actions, Docker, IAM OIDC federation, CloudWatch, pytest and moto, Playwright, Linux and Bash</dd>
+      </div>
+      <div>
+        <dt>Web &amp; AI</dt>
+        <dd>JavaScript, React, progressive web apps, API integration, LLM provider adapters</dd>
+      </div>
+      <div>
+        <dt>Data</dt>
+        <dd>PostgreSQL, PostGIS, GeoDjango, QGIS, spatial joins, CRS transformation, DynamoDB, MongoDB</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <article>
+      <div class="row">
+        <h3>Software Engineer</h3>
+        <p class="when">Sep 2026 – Present</p>
+      </div>
+      <p class="org">Afarinick Company Limited · Full-time · Accra, Ghana · On-site</p>
+      <ul class="bullets">
+        <li>Engineer and maintain application architecture and backend services, and implement the modules in that architecture.</li>
+        <li>Manage code quality and take part in system maintenance workflows.</li>
+      </ul>
+    </article>
+
+    <article>
+      <div class="row">
+        <h3>Software Engineering Team Lead</h3>
+        <p class="when">Aug 2026 – Sep 2026</p>
+      </div>
+      <p class="org">AmaliTech · Team lead / internship · Accra, Ghana · Remote</p>
+      <ul class="bullets">
+        <li>Led a team of interns through development cycles, from architecture breakdown to working services.</li>
+        <li>Guided task breakdown, pull-request reviews, and sprint delivery. Built backend APIs, automated deployment pipelines, and debugged production issues.</li>
+      </ul>
+    </article>
+
+    <article>
+      <div class="row">
+        <h3>Cloud &amp; DevOps Engineer</h3>
+        <p class="when">Jul 2026 – Sep 2026</p>
+      </div>
+      <p class="org">One Health Global Technologies · Part-time · Accra, Ghana · Remote</p>
+      <ul class="bullets">
+        <li>Provisioned EC2, IAM, S3, VPC, Lambda, CloudWatch, and ECS Fargate in Terraform, so each environment could be reviewed and reproduced.</li>
+        <li>Automated delivery with Docker and GitHub Actions, and configured CloudWatch logging and alerting.</li>
+      </ul>
+    </article>
+
+    <article>
+      <div class="row">
+        <h3>Python Developer, Backend</h3>
+        <p class="when">Dec 2024 – Mar 2025</p>
+      </div>
+      <p class="org">M365Connect · Internship · Germany · Remote</p>
+      <ul class="bullets">
+        <li>Designed Django REST Framework endpoints for data exchange across three client web applications.</li>
+        <li>Built scraping routines for structured data ingestion and refactored ORM queries so they executed faster.</li>
+      </ul>
+    </article>
+
+    <div class="earlier">
+      <article>
+        <div class="row">
+          <h3>IT Technician · KNUST, Kumasi</h3>
+          <p class="when">Oct 2024 – Sep 2025</p>
+        </div>
+        <p>Tier-1 and tier-2 support for 200+ staff and students. Active Directory for five departments and 40+ written procedures.</p>
+      </article>
+      <article>
+        <div class="row">
+          <h3>Data Science Intern · HubbleMind</h3>
+          <p class="when">Nov 2024 – Dec 2024</p>
+        </div>
+        <p>Cleaned 5,000+ health records and trained classifiers that predicted obesity level at 88% accuracy.</p>
+      </article>
+      <article>
+        <div class="row">
+          <h3>OS Technician &amp; IT Support · Lerato Consult</h3>
+          <p class="when">Nov 2022 – Dec 2024</p>
+        </div>
+        <p>Installed POS systems for 10+ retail and hospitality clients, and compiled 50+ support procedures. Greater Accra.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="split">
+    <section>
+      <h2>Education</h2>
+      <article>
+        <div class="row">
+          <h3>BSc Applied Mathematics</h3>
+          <p class="when">2021 – 2024</p>
+        </div>
+        <p class="org">KNUST, Kumasi</p>
+      </article>
+      <article>
+        <div class="row">
+          <h3>Cloud Computing &amp; AI Program</h3>
+          <p class="when">Apr – Jul 2026</p>
+        </div>
+        <p class="org">Azubi Africa · AWS · Remote</p>
+      </article>
+    </section>
+    <section>
+      <h2>Certifications</h2>
+      <ul class="certs">
+        <li><span>AWS Knowledge: Cloud Essentials <span class="cert-by">· AWS</span></span> <a href="https://www.credly.com/badges/a6873d6c-a6b8-4af8-a4c1-faa677eb6602/linked_in_profile">Credly</a></li>
+        <li><span>Django Web Framework <span class="cert-by">· Meta / Coursera</span></span> <a href="https://coursera.org/share/a9ceefb50c30e1fae57f3363aac4797b">View</a></li>
+        <li><span>System Administration &amp; IT Infrastructure Services <span class="cert-by">· Google / Coursera</span></span> <a href="https://coursera.org/share/b3f928e0d724604cc613efa2dd1c5ce1">View</a></li>
+        <li><span>The Full Stack <span class="cert-by">· Meta / Coursera</span></span> <a href="https://coursera.org/share/19541a26ae104d66db8cfc78accfed1a">View</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="projects">
+    <h2>Selected projects</h2>
+
+    <article>
+      <div class="row">
+        <h3><a href="https://github.com/GeekKwame/file-service-server">Multi-Tenant File Service API</a></h3>
+        <p class="when">2026</p>
+      </div>
+      <p class="org"><a class="link" href="https://github.com/GeekKwame/file-service-server">github.com/GeekKwame/file-service-server</a> · Backend and cloud</p>
+      <ul class="bullets">
+        <li>FastAPI hands clients presigned S3 URLs, so file bytes never pass through the API. Queries are scoped by tenant and cross-tenant reads return 404. API keys are SHA-256 hashes compared in constant time; files are addressed by UUIDv4.</li>
+        <li>ALB across two availability zones, ECS Fargate in private subnets, RDS PostgreSQL via SQLAlchemy 2.0. Terraform: 12 modules for dev, staging, and production. 12 tests at 82% coverage; CI runs Ruff and pytest on Python 3.11 and 3.12.</li>
+      </ul>
+    </article>
+
+    <article>
+      <div class="row">
+        <h3><a href="https://github.com/GeekKwame/yencare-platform">YɛnCare: Clinic Booking &amp; Virtual Queue</a></h3>
+        <p class="when">2026</p>
+      </div>
+      <p class="org"><a class="link" href="https://yencare-platform.vercel.app/">yencare-platform.vercel.app</a> · <a class="link" href="https://github.com/GeekKwame/yencare-platform">github.com/GeekKwame/yencare-platform</a> · Team of five</p>
+      <ul class="bullets">
+        <li>Booking and a live virtual queue for the KNUST Students’ Clinic. Students book without a password and check in with a reference code. Staff JWTs map to receptionist, doctor, and admin. Check-in and queue status are rate limited per IP and reference code.</li>
+        <li>Express on MongoDB and a React progressive web app, deployed on Render and Vercel. 468 backend tests and 37 Playwright end-to-end tests run in CI against MongoDB. I authored 121 commits.</li>
+      </ul>
+    </article>
+
+    <article>
+      <div class="row">
+        <h3><a href="https://github.com/GeekKwame/event-registration-system-sam">Event-Connect: Serverless Event Registration</a></h3>
+        <p class="when">2026</p>
+      </div>
+      <p class="org"><a class="link" href="https://github.com/GeekKwame/event-registration-system-sam">github.com/GeekKwame/event-registration-system-sam</a> · Capstone</p>
+      <ul class="bullets">
+        <li>CloudFront is the only public entry point, and the API sits behind a default-deny WAF. Requests that bypass CloudFront are rejected by the WAF and again by a Lambda origin-secret check. Ticket validity lives in DynamoDB, not in the browser.</li>
+        <li>Five Python Lambdas, encrypted DynamoDB, SES, and SNS. The SAM template declares 23 resources, including three Secrets Manager secrets. Nineteen tests run with moto before every deploy.</li>
+      </ul>
+    </article>
+
+    <article>
+      <div class="row">
+        <h3><a href="https://github.com/GeekKwame/ghana-cocoa-belt-qgis">Ghana Cocoa Belt: Mapping Western North</a></h3>
+        <p class="when">2026</p>
+      </div>
+      <p class="org"><a class="link" href="https://github.com/GeekKwame/ghana-cocoa-belt-qgis">github.com/GeekKwame/ghana-cocoa-belt-qgis</a> · QGIS · Synthetic farms</p>
+      <ul class="bullets">
+        <li>Twenty synthetic cocoa plots in Western North, placed against districts, roads, towns, and Hansen tree-cover loss. Areas are calculated in UTM zone 30N (EPSG:32630). Loss-year categories are preserved when the raster is reprojected.</li>
+        <li>20 polygons cover 71.6 ha across nine districts, with no invalid geometries, overlaps, or missing attributes. PyQGIS rebuilds the A4 map. Mapped tree-cover loss is context, not a compliance finding.</li>
+      </ul>
+    </article>
+
+    <div class="more">
+      <p><a class="link" href="https://github.com/GeekKwame/asase-gis"><strong>Asase GIS.</strong></a> PostGIS parcels served as GeoJSON on Leaflet, with areas in EPSG:32630. Synthetic data.</p>
+      <p><a class="link" href="https://github.com/GeekKwame/keyless"><strong>KeyLess.</strong></a> CLI checks for hardcoded keys, public buckets, static CI keys, admin IAM, and missing budgets. 42 tests.</p>
+      <p><a class="link" href="https://github.com/GeekKwame/kora-music-player"><strong>KORA.</strong></a> Django streaming through the Audius API. Signed URLs are not stored. 73 Django and 17 Node tests.</p>
+      <p><a class="link" href="https://github.com/GeekKwame/terraformed-project"><strong>Terraformed.</strong></a> Private S3 and CloudFront in Terraform, deployed with GitHub OIDC. No stored AWS keys.</p>
+      <p><a class="link" href="https://github.com/GeekKwame/renal-route"><strong>Renal Route.</strong></a> FastAPI with Gemini, OpenAI, and Claude adapters behind one interface. 18 tests. Invented demo data.</p>
+    </div>
+  </section>
+</body>
+</html>
