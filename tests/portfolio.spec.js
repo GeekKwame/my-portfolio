@@ -91,9 +91,9 @@ for (const reducedMotion of ['no-preference', 'reduce']) {
 
 test('responsive layouts, saved themes, navigation, filters, and image dialogs', async ({ page }) => {
   await readyGlobe(page);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('I build software that works in the real world.');
-  await expect(page.getByRole('link', { name: /View résumé, PDF/ })).toHaveAttribute('href', '/resume.pdf');
-  await expect(page.getByRole('link', { name: 'Discuss a project' })).toHaveAttribute('href', /mailto:dogbeblessingkwame@gmail\.com\?subject=Project%20enquiry/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('I turn bold ideas into software people trust.');
+  await expect(page.getByRole('link', { name: /See my résumé, PDF/ })).toHaveAttribute('href', '/resume.pdf');
+  await expect(page.getByRole('link', { name: "Let's build something" })).toHaveAttribute('href', /mailto:dogbeblessingkwame@gmail\.com\?subject=Project%20enquiry/);
   await expect(page.locator('#services li')).toHaveCount(5);
   await expect(page.locator('#experience')).toContainText('Data Entry, Returns Processing & IT Support Intern');
   await expect(page.locator('#experience img[alt$=" logo"]')).toHaveCount(8);
@@ -178,7 +178,7 @@ test('WebGL and texture failures leave the portfolio usable', async ({ page }) =
   });
   await page.goto('/');
   await expect(page.getByText('Interactive Earth is unavailable. You can still explore all my work below.')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Explore selected work', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: "See what I've built", exact: true })).toBeVisible();
   await expect(page.locator('#contact')).toContainText('dogbeblessingkwame@gmail.com');
 });
 
@@ -239,7 +239,7 @@ test('production HTML works without JavaScript and has route-specific metadata',
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4173/');
-  await expect(page.locator('h1')).toHaveText('I build software that works in the real world.');
+  await expect(page.locator('h1')).toHaveText('I turn bold ideas into software people trust.');
   await expect(page.locator('#work-title')).toBeVisible();
   await expect(page.locator('#services li')).toHaveCount(5);
   await expect(page.locator('#experience')).toContainText('Ghana Revenue Authority (GRA)');

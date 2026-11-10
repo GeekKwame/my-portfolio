@@ -296,7 +296,7 @@
 /* Hero and Earth share the site's existing type and mint accent. */
 @layer components {
   .hero-grid { display: grid; align-items: center; gap: 3rem; }
-  .hero-title { max-width: 13ch; margin-top: 1.7rem; font-family: 'Cal Sans', sans-serif; font-weight: 400; font-size: clamp(3rem, 5.6vw, 5.25rem); line-height: .98; letter-spacing: -.045em; }
+  .hero-title { max-width: 15ch; margin-top: 1.7rem; font-family: 'Cal Sans', sans-serif; font-weight: 400; font-size: clamp(3rem, 5.35vw, 5.1rem); line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; }
   .hero-footnote { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 2rem; border-top: 1px solid rgb(var(--rule)); margin-top: 3rem; padding-top: .75rem; font-size: .75rem; color: rgb(var(--ink-muted)); }
   .globe-shell { width: 100%; max-width: 32rem; margin-inline: auto; min-width: 0; }
   .globe-caption { display: flex; justify-content: space-between; gap: 1rem; font-size: .625rem; letter-spacing: .12em; text-transform: uppercase; color: rgb(var(--ink-muted)); padding-bottom: .75rem; border-bottom: 1px solid rgb(var(--rule)); }

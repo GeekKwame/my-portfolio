@@ -32,9 +32,9 @@ function meta(project) {
 function CaseStudy({ project, number }) {
   const titleId = `${project.slug}-title`;
   const rows = [
-    ['Problem', project.problem],
-    ['Approach', project.approach],
-    ['Key decision', project.decision],
+    ['The challenge', project.problem],
+    ['What I built', project.approach],
+    ['Why this approach', project.decision],
   ].filter(([, text]) => text);
 
   return (
@@ -140,7 +140,7 @@ function Group({ id, title, lede, count, children }) {
 export default function ProjectsPage() {
   useDocumentMeta({
     title: `Projects | ${PERSONAL_INFO.name}`,
-    description: `Software projects by ${PERSONAL_INFO.name}: APIs, web applications, AWS infrastructure, automation, and GIS, with evidence, architecture decisions, and source code.`,
+    description: `Explore how ${PERSONAL_INFO.name} builds APIs, web applications, AWS infrastructure, automation, and GIS projects, with honest notes on the thinking behind each one.`,
     path: ROUTES.projects,
   });
 
@@ -169,10 +169,10 @@ export default function ProjectsPage() {
     <div className="shell pt-28 pb-24 sm:pt-32 lg:pt-36">
       <header className="max-w-3xl">
         <p className="label">Projects</p>
-        <h1 className="section-title mt-3">Everything I&apos;ve built, with the reasoning behind it</h1>
+        <h1 className="section-title mt-3">The work, the thinking, and the lessons behind it</h1>
         <p className="lede mt-5">
-          {PROJECTS.length} projects. Case studies first, then smaller builds, then experiments and course work.
-          Every entry links to its source.
+          Here are {PROJECTS.length} projects at different stages, from detailed case studies to smaller experiments.
+          I’ve included the source for every one so you can look beyond the screenshots.
         </p>
       </header>
 
@@ -196,7 +196,7 @@ export default function ProjectsPage() {
       <div className="mt-16 sm:mt-20">
         {featured.length > 0 && (
           <Group id="case-studies" title="Case studies" count={featured.length}
-            lede="In depth: the problem, how I approached it, and the decision that shaped the design.">
+            lede="A closer look at the challenge, what I built, and the choices that shaped the result.">
             <div className="space-y-20 sm:space-y-24">
               {featured.map((project) => (
                 <CaseStudy key={project.slug} project={project} number={FEATURED_PROJECTS.indexOf(project) + 1} />
@@ -215,7 +215,7 @@ export default function ProjectsPage() {
 
         {supporting.length > 0 && (
           <Group id="experiments" title="Experiments and course work" count={supporting.length}
-            lede="Smaller builds and guided labs. Useful practice, linked for completeness rather than depth.">
+            lede="Smaller builds and guided labs that helped me test an idea, learn a tool, or practise a new way of working.">
             <ul className="divide-y divide-rule border-b border-rule">
               {supporting.map((project) => <SupportingRow key={project.slug} project={project} />)}
             </ul>

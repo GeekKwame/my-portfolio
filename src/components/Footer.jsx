@@ -43,7 +43,7 @@ const Footer = memo(function Footer() {
             </nav>
 
             <p className="mt-6 text-sm leading-relaxed">
-              © {year} {PERSONAL_INFO.fullName}. Built with React, Vite, and Tailwind CSS.
+              © {year} {PERSONAL_INFO.fullName}. Designed and built by me with React, Vite, and Tailwind CSS.
             </p>
           </div>
         </div>

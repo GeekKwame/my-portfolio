@@ -19,7 +19,7 @@ const EXPERIENCES = [
     duration: 'Sep 2026 – Present',
     location: 'Accra, Ghana · On-site',
     isCurrent: true,
-    description: 'Engineering and maintaining application architecture, backend services, and business-system modules while supporting code quality and system maintenance.',
+    description: 'I build and maintain application architecture, backend services, and business modules, with a steady focus on code quality and dependable systems.',
     skills: ['Software Engineering', 'Backend Development', 'System Architecture'],
     logo: afarinickLogo,
     logoText: 'AF',
@@ -31,7 +31,7 @@ const EXPERIENCES = [
     type: 'Team Lead / Internship',
     duration: 'Aug 2026 – Sep 2026',
     location: 'Accra, Ghana · Remote',
-    description: 'Led an intern engineering team through development cycles, coordinating architecture breakdown, task delivery, pull-request reviews, and working services.',
+    description: 'I led an intern engineering team through the build, turning architecture into clear tasks, reviewing pull requests, and helping the team deliver working services.',
     skills: ['Team Leadership', 'Backend Engineering', 'CI/CD', 'Code Review'],
     logo: amalitechLogo,
     logoText: 'AT',
@@ -43,7 +43,7 @@ const EXPERIENCES = [
     type: 'Part-time',
     duration: 'Jul 2026 – Sep 2026',
     location: 'Accra, Ghana · Remote',
-    description: 'Designed reproducible AWS infrastructure with Terraform, automated Docker-based delivery with GitHub Actions, and configured application logging and alerts.',
+    description: 'I designed repeatable AWS infrastructure with Terraform, automated Docker delivery through GitHub Actions, and set up logging and alerts for the application.',
     skills: ['AWS', 'Terraform', 'Docker', 'GitHub Actions', 'ECS Fargate'],
     logo: oneHealthLogo,
     logoText: 'OH',
@@ -54,7 +54,7 @@ const EXPERIENCES = [
     company: 'KNUST',
     duration: 'Oct 2024 – Sep 2025',
     location: 'Kumasi, Ghana',
-    description: 'Delivered Tier 1 and Tier 2 technical support, assisted with Active Directory administration, and documented repeatable technical procedures.',
+    description: 'I helped staff solve day-to-day technical issues, supported Active Directory administration, and documented fixes so the next problem was easier to handle.',
     skills: ['IT Support', 'Active Directory', 'Troubleshooting', 'Documentation'],
     logo: knustLogo,
     logoText: 'KNUST',
@@ -66,7 +66,7 @@ const EXPERIENCES = [
     type: 'Internship',
     duration: 'Dec 2024 – Mar 2025',
     location: 'Germany · Remote',
-    description: 'Built Django REST Framework endpoints for data exchange, automated structured data collection in Python, and improved ORM queries.',
+    description: 'I built Django REST Framework endpoints for data exchange, automated structured data collection in Python, and improved ORM queries.',
     skills: ['Python', 'Django REST Framework', 'REST APIs', 'ORM', 'Automation'],
     logo: m365connectLogo,
     logoText: 'M365',
@@ -77,7 +77,7 @@ const EXPERIENCES = [
     company: 'HubbleMind',
     type: 'Internship',
     duration: 'Nov 2024 – Dec 2024',
-    description: 'Prepared health data and trained machine-learning classifiers as part of a data science internship project.',
+    description: 'I prepared health data and trained machine learning classifiers as part of a hands-on data science internship project.',
     skills: ['Data Preparation', 'Machine Learning', 'Python'],
     logo: hubbleMindLogo,
     logoClassName: 'object-cover',
@@ -89,7 +89,7 @@ const EXPERIENCES = [
     company: 'Lerato Consult',
     duration: 'Nov 2022 – Dec 2024',
     location: 'Greater Accra, Ghana',
-    description: 'Installed and configured POS systems for retail and hospitality environments and documented troubleshooting and support procedures.',
+    description: 'I installed and configured POS systems for shops and hospitality teams, then documented the support steps that kept them running.',
     skills: ['POS Configuration', 'IT Support', 'Troubleshooting', 'Business Technology'],
     logo: leratoLogo,
     logoClassName: 'object-cover object-top',
@@ -102,7 +102,7 @@ const EXPERIENCES = [
     type: 'Internship',
     duration: 'Sep 2023 – Nov 2023',
     location: 'Accra, Ghana',
-    description: 'Supported returns processing through accurate records entry and administrative data handling, and provided office IT support within established operational workflows.',
+    description: 'I supported tax returns processing through careful record entry and administrative data work, while also helping with everyday office IT issues.',
     skills: ['Data Accuracy', 'Information Management', 'Returns Processing', 'Operational Workflows', 'IT Support'],
     logo: graLogo,
     logoText: 'GRA',
@@ -115,8 +115,8 @@ const Experience = memo(function Experience() {
       id="experience"
       number="04"
       label="Experience"
-      title="Professional record"
-      lede="Software engineering, cloud delivery, data operations, and hands-on technology support—ordered by most recent completion date."
+      title="Where I’ve worked"
+      lede="My path has taken me from hands-on IT support to backend engineering, cloud delivery, team leadership, and data work."
     >
       <ol className="divide-y divide-rule border-y border-rule">
         {EXPERIENCES.map((experience) => (

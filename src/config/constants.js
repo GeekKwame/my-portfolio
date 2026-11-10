@@ -5,17 +5,17 @@
 
 export const SITE_URL = 'https://devedmund.vercel.app/';
 
-/** LinkedIn headline — single source of truth for positioning across the site */
+/** LinkedIn headline, used as the positioning source across the site. */
 export const HEADLINE =
   'Software Engineer | Backend & Cloud | Web Applications | Data & GIS';
 
-/** Contact email — single source of truth for mailto, contact form, and footer */
+/** Contact email used for mailto links, the contact section, and the footer. */
 export const CONTACT_EMAIL = 'dogbeblessingkwame@gmail.com';
 
 export const SEO = {
   title: 'Blessing Edmund | Software Engineer | Backend & Cloud | Web Applications | Data & GIS',
   description:
-    'Software engineer in Accra building reliable APIs, web applications, cloud infrastructure, automation, and geospatial systems for practical outcomes.',
+    'Meet Blessing Edmund, a software engineer in Accra who builds dependable APIs, web applications, cloud systems, automation, and practical GIS tools.',
   keywords:
     'Software Engineer, Backend Engineer, Cloud Engineer, Web Application Development, API Engineering, AWS, Terraform, Docker, FastAPI, Django, Python, JavaScript, React, PostgreSQL, DevOps, CI/CD, Automation, QGIS, PostGIS, GeoDjango, GIS, Ghana',
   ogSiteName: 'Blessing Edmund Portfolio',
@@ -27,13 +27,13 @@ export const PERSONAL_INFO = {
   fullName: 'Blessing Edmund Kwame Dogbe',
   title: 'Software Engineer',
   headline: HEADLINE,
-  bio: 'Software engineer building reliable APIs, web applications, cloud infrastructure, automation, and geospatial systems.',
+  bio: 'I’m a software engineer who enjoys turning messy, real-world problems into systems people can understand and rely on.',
   intro:
-    "I'm Blessing Edmund Kwame Dogbe, a software engineer building reliable APIs, web applications, and cloud infrastructure. I also work with automation, geospatial data, and business technology—connecting good engineering to practical outcomes.",
+    "I'm Edmund Blessing, a software engineer in Accra. I build dependable APIs, web apps, and cloud systems, and I use automation, data, and GIS to solve practical problems.",
   currentRole: 'Software Engineer at Afarinick Company Limited',
   location: 'Accra, Ghana',
   timezone: 'GMT',
-  availability: 'Open to full-time software engineering roles, international remote or contract work, and selected freelance engagements.',
+  availability: 'I’m open to full-time software engineering roles, remote or contract work, and a small number of freelance projects.',
   email: CONTACT_EMAIL,
 };
 
@@ -87,7 +87,7 @@ export const NAVIGATION_LINKS = [
   { id: 'contact', name: 'Contact', href: '/#contact', section: 'contact' },
 ];
 
-/** Homepage sections in order, with their numbers — used by section headers and the footer index */
+/** Homepage sections in order, with their numbers for section headers and the footer index. */
 export const SECTION_INDEX = [
   { number: '01', name: 'Work', to: 'work' },
   { number: '02', name: 'Services', to: 'services' },

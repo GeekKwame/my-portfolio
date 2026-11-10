@@ -28,6 +28,14 @@ The pre-implementation audit is recorded in [`AUDIT-2026-11-09.md`](./AUDIT-2026
 - Restyled the globe appearance modes as a clear segmented control, strengthened the rotation/reset affordances, and added an explicit Home-key instruction linked to the canvas accessibility description.
 - Clarified the globe caption and Accra home-base label without changing the existing rendering, lazy-loading, failure recovery, or reduced-motion behaviour.
 
+## Humanized copy pass
+
+- Replaced the compressed hero line with “I turn bold ideas into software people trust.” and loosened its type spacing for a calmer three-line desktop composition.
+- Rewrote the supporting hero copy, calls to action, section introductions, service descriptions, experience summaries, about narrative, contact prompt, globe labels, and footer in a warmer first-person voice.
+- Reworked every project summary and case-study narrative to explain the purpose and decisions in plain language while preserving the verified technical evidence and metrics.
+- Updated page descriptions and social metadata to match the more natural voice without weakening the portfolio’s software engineering positioning.
+- Removed double-hyphen commands and em-dash constructions from visitor-facing copy.
+
 ## Files
 
 ### Added
@@ -71,7 +79,7 @@ The pre-implementation audit is recorded in [`AUDIT-2026-11-09.md`](./AUDIT-2026
 - `npm run lint`: passed with no errors or warnings.
 - `npm run build`: passed; `/` and `/projects` prerendered successfully.
 - Production asset output includes the hashed GRA WebP (`GRA-BMnh2PQO.webp`, 7.33 KB in this build).
-- `npx playwright test`: **11/11 passed** in the final run (3.2 minutes).
+- `npx playwright test`: **11/11 passed** in the final copy run (3.4 minutes).
 - Experience regression coverage confirms all eight employer images are present and that the GRA, KNUST, HubbleMind, and Lerato Consult assets decode successfully.
 - Automated axe checks: no violations in the scanned WCAG A/AA rules on both routes, both themes, or the open mobile menu.
 - Responsive automation: no horizontal overflow at 320, 390, 768, 1024, 1440, or 1920 px.

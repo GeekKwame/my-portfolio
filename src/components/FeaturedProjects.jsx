@@ -41,7 +41,7 @@ function FeaturedCard({ project, number, wide }) {
 
         <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-7">
           <Link to={projectHref(project.slug)} className="btn-secondary !min-h-[40px] !px-4 !text-sm">
-            Case study <span aria-hidden="true">→</span>
+            Read the story <span aria-hidden="true">→</span>
             <span className="sr-only">: {project.title}</span>
           </Link>
           <ProjectLinks project={project} variant="text" />
@@ -61,8 +61,8 @@ const FeaturedProjects = memo(function FeaturedProjects() {
       number="01"
       label="Work"
       wide
-      title="Selected projects"
-      lede="From Python APIs and AWS infrastructure to full-stack products and geospatial analysis. Explore the problem, the architecture, and the decisions behind each build."
+      title="Work I’m proud to share"
+      lede="These projects show how I think, not just what I ship. Explore the problem behind each one, the choices I made, and what the finished work can do."
     >
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
         {FEATURED_PROJECTS.map((project, i) => (
@@ -72,10 +72,10 @@ const FeaturedProjects = memo(function FeaturedProjects() {
 
       <div className="mt-12 flex flex-col gap-4 border-t border-ink pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-ink-muted">
-          {moreCount} more, from an AWS security scanner to a PostGIS mapping prototype, each with notes on how it was built.
+          There are {moreCount} more to explore, from an AWS security scanner to a PostGIS mapping prototype.
         </p>
         <Link to={ROUTES.projects} className="btn-primary self-start sm:self-auto">
-          All {PROJECTS.length} projects <span aria-hidden="true">→</span>
+          Browse all {PROJECTS.length} projects <span aria-hidden="true">→</span>
         </Link>
       </div>
     </Section>

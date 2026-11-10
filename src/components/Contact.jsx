@@ -35,10 +35,10 @@ const Contact = memo(function Contact() {
       number="06"
       label="Contact"
       tone="ink"
-      title="Hiring a software engineer—or need a reliable project partner? Let’s talk."
-      lede={`${PERSONAL_INFO.availability} Based in ${PERSONAL_INFO.location} (${PERSONAL_INFO.timezone}), open to remote work.`}
+      title="Have a role, an idea, or a stubborn technical problem? Let’s talk."
+      lede={`${PERSONAL_INFO.availability} I’m based in ${PERSONAL_INFO.location} (${PERSONAL_INFO.timezone}) and comfortable working remotely.`}
     >
-      <p className="label !text-paper/70">Email is the fastest way to reach me</p>
+      <p className="label !text-paper/70">The quickest way to reach me is by email</p>
       <div className="mt-3 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
         <a
           href={`mailto:${PERSONAL_INFO.email}`}
