@@ -1,6 +1,6 @@
 # Blessing Edmund — Portfolio
 
-Production portfolio site built with React, Vite, and Tailwind CSS: a homepage with an interactive Three.js globe, selected projects, skills, experience, and contact, plus a `/projects` page with every project. Dark mode is the default; the visitor’s saved light or dark preference takes priority. Both pages are prerendered to HTML at build time.
+Production software engineering portfolio built with React, Vite, and Tailwind CSS: a homepage with an interactive Three.js globe, selected projects, evidence-backed services, skills, professional experience, and contact paths, plus a `/projects` page with every project. Dark mode is the default; the visitor’s saved light or dark preference takes priority. Both pages are prerendered to HTML at build time.
 
 See [docs/PORTFOLIO.md](docs/PORTFOLIO.md) for how the site is structured, how the theme works, and how to add or update a project.
 
@@ -59,9 +59,10 @@ Requires Node.js 20.19+ (see `.nvmrc` for 22).
 
 1. Personal info and links: `src/config/constants.js`
 2. Projects: `src/data/projects.js` (see [docs/PORTFOLIO.md](docs/PORTFOLIO.md#projects))
-3. Experience: `src/components/Experience.jsx`
-4. Resume PDF: `public/resume.pdf`
-5. SEO / meta: `index.html`
+3. Services: `src/components/Services.jsx`
+4. Experience: `src/components/Experience.jsx`
+5. Resume PDF: `public/resume.pdf`
+6. SEO / meta: `src/config/constants.js` and `index.html`
 
 ## Deploy
 

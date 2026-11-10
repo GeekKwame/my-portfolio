@@ -91,6 +91,15 @@ for (const reducedMotion of ['no-preference', 'reduce']) {
 
 test('responsive layouts, saved themes, navigation, filters, and image dialogs', async ({ page }) => {
   await readyGlobe(page);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('I build software that works in the real world.');
+  await expect(page.getByRole('link', { name: /View résumé, PDF/ })).toHaveAttribute('href', '/resume.pdf');
+  await expect(page.getByRole('link', { name: 'Discuss a project' })).toHaveAttribute('href', /mailto:dogbeblessingkwame@gmail\.com\?subject=Project%20enquiry/);
+  await expect(page.locator('#services li')).toHaveCount(5);
+  await expect(page.locator('#experience')).toContainText('Data Entry, Returns Processing & IT Support Intern');
+  const graLogo = page.getByAltText('Ghana Revenue Authority (GRA) logo');
+  await graLogo.scrollIntoViewIfNeeded();
+  await expect(graLogo).toBeVisible();
+  await expect.poll(() => graLogo.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -99,6 +108,8 @@ test('responsive layouts, saved themes, navigation, filters, and image dialogs',
   await page.reload();
   await expect(page.getByRole('switch', { name: 'Dark theme' })).toHaveAttribute('aria-checked', 'false');
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(10);
   await page.getByRole('button', { name: 'Menu', exact: true }).click();
   await expect(page.locator('#main')).toHaveAttribute('inert', '');
   await page.keyboard.press('Escape');
@@ -161,7 +172,7 @@ test('WebGL and texture failures leave the portfolio usable', async ({ page }) =
   });
   await page.goto('/');
   await expect(page.getByText('Interactive Earth is unavailable. You can still explore all my work below.')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Explore projects', exact: false }).first()).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Explore selected work', exact: true })).toBeVisible();
   await expect(page.locator('#contact')).toContainText('dogbeblessingkwame@gmail.com');
 });
 
@@ -222,8 +233,10 @@ test('production HTML works without JavaScript and has route-specific metadata',
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4173/');
-  await expect(page.locator('h1')).toContainText('Blessing');
+  await expect(page.locator('h1')).toHaveText('I build software that works in the real world.');
   await expect(page.locator('#work-title')).toBeVisible();
+  await expect(page.locator('#services li')).toHaveCount(5);
+  await expect(page.locator('#experience')).toContainText('Ghana Revenue Authority (GRA)');
   await expect(page.locator('#contact')).toContainText('dogbeblessingkwame@gmail.com');
   await page.goto('http://127.0.0.1:4173/projects/');
   await expect(page).toHaveTitle('Projects | Blessing Edmund');

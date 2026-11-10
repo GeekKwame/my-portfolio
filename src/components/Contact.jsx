@@ -32,10 +32,10 @@ const Contact = memo(function Contact() {
   return (
     <Section
       id="contact"
-      number="05"
+      number="06"
       label="Contact"
       tone="ink"
-      title="Hiring for backend, cloud, or platform work? Let’s talk."
+      title="Hiring a software engineer—or need a reliable project partner? Let’s talk."
       lede={`${PERSONAL_INFO.availability} Based in ${PERSONAL_INFO.location} (${PERSONAL_INFO.timezone}), open to remote work.`}
     >
       <p className="label !text-paper/70">Email is the fastest way to reach me</p>

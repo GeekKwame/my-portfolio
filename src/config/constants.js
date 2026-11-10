@@ -7,17 +7,17 @@ export const SITE_URL = 'https://devedmund.vercel.app/';
 
 /** LinkedIn headline — single source of truth for positioning across the site */
 export const HEADLINE =
-  'Software Engineer | Python · FastAPI · Django · React | AWS · Terraform · CI/CD | Open to Opportunities';
+  'Software Engineer | Backend & Cloud | Web Applications | Data & GIS';
 
 /** Contact email — single source of truth for mailto, contact form, and footer */
 export const CONTACT_EMAIL = 'dogbeblessingkwame@gmail.com';
 
 export const SEO = {
-  title: 'Blessing Edmund | Cloud & Backend Engineer',
+  title: 'Blessing Edmund | Software Engineer | Backend & Cloud | Web Applications | Data & GIS',
   description:
-    'Cloud and backend engineer in Ghana building Python APIs and AWS infrastructure, with geospatial projects in QGIS, GeoDjango and PostGIS. Explore case studies and mapping work.',
+    'Software engineer in Accra building reliable APIs, web applications, cloud infrastructure, automation, and geospatial systems for practical outcomes.',
   keywords:
-    'Software Engineer, Cloud Engineer, AWS, Terraform, Docker, FastAPI, Django, Python Developer, PostgreSQL, React, Linux, DevOps, CI/CD, GitHub Actions, Ghana, Portfolio, QGIS, PostGIS, GeoDjango, Geospatial',
+    'Software Engineer, Backend Engineer, Cloud Engineer, Web Application Development, API Engineering, AWS, Terraform, Docker, FastAPI, Django, Python, JavaScript, React, PostgreSQL, DevOps, CI/CD, Automation, QGIS, PostGIS, GeoDjango, GIS, Ghana',
   ogSiteName: 'Blessing Edmund Portfolio',
 };
 
@@ -25,15 +25,15 @@ export const PERSONAL_INFO = {
   name: 'Blessing Edmund',
   initials: 'BEKD',
   fullName: 'Blessing Edmund Kwame Dogbe',
-  title: 'Cloud & Backend Engineer',
+  title: 'Software Engineer',
   headline: HEADLINE,
-  bio: 'Cloud and backend engineer building production Python APIs and AWS infrastructure with Terraform, Docker, and CI/CD.',
+  bio: 'Software engineer building reliable APIs, web applications, cloud infrastructure, automation, and geospatial systems.',
   intro:
-    'I build Python backends and the AWS infrastructure they run on: declared in Terraform or SAM, deployed through CI/CD, and tested before they ship.',
+    "I'm Blessing Edmund Kwame Dogbe, a software engineer building reliable APIs, web applications, and cloud infrastructure. I also work with automation, geospatial data, and business technology—connecting good engineering to practical outcomes.",
   currentRole: 'Software Engineer at Afarinick Company Limited',
   location: 'Accra, Ghana',
   timezone: 'GMT',
-  availability: 'Open to full-time engineering roles, freelance infrastructure work, and technical collaborations.',
+  availability: 'Open to full-time software engineering roles, international remote or contract work, and selected freelance engagements.',
   email: CONTACT_EMAIL,
 };
 
@@ -80,6 +80,7 @@ export const SOCIAL_LINKS = [
  */
 export const NAVIGATION_LINKS = [
   { id: 'work', name: 'Work', href: '/#work', section: 'work' },
+  { id: 'services', name: 'Services', href: '/#services', section: 'services' },
   { id: 'projects', name: 'Projects', href: '/projects', route: '/projects' },
   { id: 'experience', name: 'Experience', href: '/#experience', section: 'experience' },
   { id: 'about', name: 'About', href: '/#about', section: 'about' },
@@ -89,10 +90,11 @@ export const NAVIGATION_LINKS = [
 /** Homepage sections in order, with their numbers — used by section headers and the footer index */
 export const SECTION_INDEX = [
   { number: '01', name: 'Work', to: 'work' },
-  { number: '02', name: 'Skills', to: 'skills' },
-  { number: '03', name: 'Experience', to: 'experience' },
-  { number: '04', name: 'About', to: 'about' },
-  { number: '05', name: 'Contact', to: 'contact' },
+  { number: '02', name: 'Services', to: 'services' },
+  { number: '03', name: 'Skills', to: 'skills' },
+  { number: '04', name: 'Experience', to: 'experience' },
+  { number: '05', name: 'About', to: 'about' },
+  { number: '06', name: 'Contact', to: 'contact' },
 ];
 
 export const RESUME = {

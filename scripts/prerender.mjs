@@ -13,7 +13,7 @@ try {
   const escape = (value) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
   for (const path of ['/', '/projects']) {
     const title = path === '/' ? SEO.title : `Projects | ${PERSONAL_INFO.name}`;
-    const description = path === '/' ? SEO.description : `Engineering projects by ${PERSONAL_INFO.name}: Python APIs, AWS infrastructure, full-stack applications, and geospatial analysis, with architecture decisions and source code.`;
+    const description = path === '/' ? SEO.description : `Software projects by ${PERSONAL_INFO.name}: APIs, web applications, AWS infrastructure, automation, and GIS, with evidence, architecture decisions, and source code.`;
     const canonical = new URL(path, SITE_URL).href;
     let html = template.replace('<div id="root"></div>', `<div id="root">${renderToString(React.createElement(App, { initialPath: path }))}</div>`);
     html = html.replace(/<title>.*?<\/title>/, `<title>${escape(title)}</title>`)

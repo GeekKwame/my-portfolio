@@ -8,7 +8,7 @@ Two pages, prerendered at build time and enhanced by a small client-side router 
 
 | Path | Component | Contents |
 |---|---|---|
-| `/` | `src/pages/HomePage.jsx` | Hero, selected projects, skills, experience, about, contact |
+| `/` | `src/pages/HomePage.jsx` | Hero, selected projects, services, skills, experience, about, contact |
 | `/projects` | `src/pages/ProjectsPage.jsx` | Every project: case studies, more projects, experiments |
 | anything else | `src/pages/NotFoundPage.jsx` | 404 with links back |
 
@@ -18,6 +18,7 @@ src/
 ├── pages/                   # one file per route
 ├── components/              # sections and shared UI
 │   ├── FeaturedProjects.jsx # homepage project cards
+│   ├── Services.jsx         # five evidence-backed client service categories
 │   ├── ProjectThumb.jsx     # fixed-ratio image with a text fallback
 │   ├── ProjectLinks.jsx     # live demo / source links
 │   ├── Link.jsx             # internal link that routes without a reload
@@ -57,6 +58,12 @@ All project content lives in `src/data/projects.js`. Each project has a `tier`:
 | `supporting` | One-line entry on `/projects` | `summary`, `stack`, `links` |
 
 Order within a tier is the order in the array. Keep three or four projects featured, each showing a different capability; the homepage grid is designed for that. With an odd number, the first card spans the full width.
+
+## Services and experience
+
+- `src/components/Services.jsx` translates verified project and work evidence into five client-facing service categories. Every category must keep at least one real evidence link; do not add a service solely for keyword coverage.
+- `src/components/Experience.jsx` is the single employment timeline. Keep entries ordered by most recent completion date, preserve overlapping roles, and use only responsibilities supported by the résumé or user-supplied evidence.
+- Employer logos belong in `src/assets/images/companies/`, are imported as modules, and use the shared 60 × 60 `RecordEntry` treatment. `logoText` is the resilient fallback when an image fails or no logo is available.
 
 ### Adding or updating a project
 

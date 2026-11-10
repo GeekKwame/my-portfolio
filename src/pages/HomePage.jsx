@@ -1,5 +1,6 @@
 import Home from '../components/Home';
 import FeaturedProjects from '../components/FeaturedProjects';
+import Services from '../components/Services';
 import Skills from '../components/Skills';
 import Experience from '../components/Experience';
 import About from '../components/About';
@@ -17,6 +18,7 @@ export default function HomePage() {
     <>
       <Home />
       <FeaturedProjects />
+      <Services />
       <Skills />
       <Experience />
       <About />

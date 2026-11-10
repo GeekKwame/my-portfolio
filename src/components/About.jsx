@@ -32,7 +32,7 @@ const About = memo(function About() {
   return (
     <Section
       id="about"
-      number="04"
+      number="05"
       label="About"
       title="A systems mindset, from the ground up"
     >

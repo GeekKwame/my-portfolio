@@ -38,7 +38,7 @@ const Skills = memo(function Skills() {
   return (
     <Section
       id="skills"
-      number="02"
+      number="03"
       label="Skills"
       title="Tools with a purpose"
       lede="The technologies I use to build, deploy, and maintain software. Follow each capability to a project where it’s put to work."

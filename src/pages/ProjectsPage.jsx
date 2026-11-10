@@ -140,7 +140,7 @@ function Group({ id, title, lede, count, children }) {
 export default function ProjectsPage() {
   useDocumentMeta({
     title: `Projects | ${PERSONAL_INFO.name}`,
-    description: `Projects by ${PERSONAL_INFO.name}: QGIS mapping and spatial analysis, AWS infrastructure, Python and Node.js backends, and full-stack products, with evidence and implementation notes.`,
+    description: `Software projects by ${PERSONAL_INFO.name}: APIs, web applications, AWS infrastructure, automation, and GIS, with evidence, architecture decisions, and source code.`,
     path: ROUTES.projects,
   });
 

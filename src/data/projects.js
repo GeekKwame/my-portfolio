@@ -88,7 +88,7 @@ export const PROJECTS = [
     decision:
       'Every query is scoped by tenant and files are addressed by UUIDv4. Cross-tenant reads return 404 rather than 403, so a tenant cannot probe for other tenants’ files. API keys are stored as SHA-256 hashes and compared in constant time.',
     evidence: [
-      '12 tests pass with 82% coverage of the application package; CI runs Ruff and pytest on Python 3.11 and 3.12.',
+      '12 test functions cover the API lifecycle and tenant-isolation behavior; CI runs Ruff and pytest on Python 3.11 and 3.12.',
       'A Terraform workflow plans the dev, staging, and production environments in CI.',
       'Docs cover architecture, cost estimates, deployment, disaster recovery, and a runbook.',
     ],
@@ -105,7 +105,7 @@ export const PROJECTS = [
     focus: ['fullstack', 'backend'],
     status: 'Team project',
     summary: 'Appointment booking and a live virtual queue for the KNUST Students’ Clinic. Students book without a password and check in with a reference code.',
-    highlight: '468 backend tests and 37 Playwright end-to-end tests run in CI against a real MongoDB service.',
+    highlight: 'The current repository documents 471 backend tests and 34 authored Playwright scenarios, with the browser suite running in CI against MongoDB.',
     image: {
       src: yencareImage,
       width: 1485,
@@ -121,8 +121,8 @@ export const PROJECTS = [
     decision:
       'Patients identify themselves with a reference code and phone number instead of an account. Because that code is effectively the only secret, check-in and queue-status requests are rate limited per client IP and reference code, returning HTTP 429.',
     evidence: [
-      '468 backend test cases across 40 files, plus 37 Playwright end-to-end tests.',
-      'Pull-request CI runs the backend suite against MongoDB 7 and builds the frontend; a second workflow runs Playwright against a replica set.',
+      'The current default branch documents 471 backend tests; 34 authored Playwright scenarios expand to 70 configured browser-project executions.',
+      'Pull-request CI runs the backend suite against MongoDB 7 and builds the frontend; a second workflow runs Playwright across Chromium, Firefox, and WebKit against a replica set.',
       'Built by a team of five; I authored 121 commits in the shared repository.',
     ],
     stack: ['React', 'Express', 'MongoDB', 'Mongoose', 'JWT', 'Playwright', 'GitHub Actions'],

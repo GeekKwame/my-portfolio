@@ -9,7 +9,7 @@ function RecordEntry({ title, organization, type, duration, location, isCurrent,
       <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
         <div className="grayscale-hover flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-rule bg-white p-1.5">
           {logo && !logoFailed ? (
-            <img src={logo} alt="" width="60" height="60" loading="lazy" decoding="async" className="h-full w-full object-contain" onError={() => setLogoFailed(true)} />
+            <img src={logo} alt={`${organization} logo`} width="60" height="60" loading="lazy" decoding="async" className="h-full w-full object-contain" onError={() => setLogoFailed(true)} />
           ) : (
             <span aria-hidden="true" className="font-mono text-[0.6875rem] text-neutral-500">{logoText}</span>
           )}
@@ -35,7 +35,7 @@ function RecordEntry({ title, organization, type, duration, location, isCurrent,
           <p className="font-mono text-[0.9375rem] font-semibold leading-tight text-ink">
             {duration}
           </p>
-          <p className="text-sm text-ink-muted mt-1">{location}</p>
+          {location && <p className="text-sm text-ink-muted mt-1">{location}</p>}
         </div>
       </div>
 
