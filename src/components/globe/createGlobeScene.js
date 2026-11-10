@@ -23,6 +23,7 @@ export function createGlobeScene(container, { onStatus, onCountries, onSelection
   renderer.setClearColor(0x000000, 0);
   const canvas = renderer.domElement;
   canvas.setAttribute('aria-label', 'Earth. Arrow keys rotate; Home returns to Accra.');
+  canvas.setAttribute('aria-describedby', 'globe-instructions');
   canvas.setAttribute('role', 'img');
   canvas.tabIndex = 0;
   container.appendChild(canvas);

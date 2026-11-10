@@ -55,9 +55,12 @@ const Services = memo(function Services() {
       title="Engineering support from build to operation"
       lede="Practical services for teams that need software delivered clearly, deployed reliably, and supported after launch."
     >
-      <ol className="grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule md:grid-cols-2 xl:grid-cols-5">
+      <ol className="grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule md:grid-cols-2 xl:grid-cols-12">
         {SERVICES.map((service, index) => (
-          <li key={service.title} className="flex min-h-full flex-col bg-paper-raised p-6 sm:p-7">
+          <li
+            key={service.title}
+            className={`flex min-h-full flex-col bg-paper-raised p-6 sm:p-7 ${index === SERVICES.length - 1 ? 'md:col-span-2 xl:col-span-6' : index >= 3 ? 'xl:col-span-6' : 'xl:col-span-4'}`}
+          >
             <p className="font-mono text-meta text-accent-strong">{String(index + 1).padStart(2, '0')}</p>
             <h3 className="mt-4 text-xl text-ink">{service.title}</h3>
             <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">{service.body}</p>

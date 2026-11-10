@@ -42,8 +42,8 @@ const Home = memo(function Home() {
           <GlobeExperience />
         </div>
         <div className="hero-footnote">
-          <p>Built with care. Designed to hold up.</p>
-          <a href="#work" className="inline-flex min-h-[44px] items-center gap-3">Explore the work <span aria-hidden="true">↓</span></a>
+          <p>Source-linked case studies</p>
+          <p>Built, tested, and documented.</p>
         </div>
       </div>
     </section>

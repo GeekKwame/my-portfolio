@@ -2,7 +2,7 @@
 
 Branch: `codex/portfolio-professional-positioning`
 
-Commit: `feat: refine portfolio positioning and experience`
+Initial refinement commit: `310dafe feat: refine portfolio positioning and experience`
 
 The pre-implementation audit is recorded in [`AUDIT-2026-11-09.md`](./AUDIT-2026-11-09.md).
 
@@ -19,6 +19,15 @@ The pre-implementation audit is recorded in [`AUDIT-2026-11-09.md`](./AUDIT-2026
 - Preserved the established themes, section system, project case studies, responsive behavior, animations, navigation, static prerendering, and interactive Earth implementation.
 - Added automated assertions for the hero actions, five services, GRA content and decoded production image, and no-JavaScript output.
 
+## Final UI/UX and globe polish
+
+- Integrated the user-supplied KNUST, HubbleMind, and Lerato Consult logos through the Vite asset pipeline and added decoded-image regression checks for each one.
+- Widened the experience logo frame so horizontal wordmarks remain legible, while preserving the shared fallback treatment and showing colour by default on touch-only devices.
+- Rebalanced the five service cards from a compressed single row into a 3+2 desktop composition with more readable line lengths and stronger visual hierarchy.
+- Replaced the duplicate lower hero link with concise proof points, leaving one unambiguous path to the selected work.
+- Restyled the globe appearance modes as a clear segmented control, strengthened the rotation/reset affordances, and added an explicit Home-key instruction linked to the canvas accessibility description.
+- Clarified the globe caption and Accra home-base label without changing the existing rendering, lazy-loading, failure recovery, or reduced-motion behaviour.
+
 ## Files
 
 ### Added
@@ -29,6 +38,9 @@ The pre-implementation audit is recorded in [`AUDIT-2026-11-09.md`](./AUDIT-2026
 - `docs/screenshots/portfolio-mobile.png`
 - `src/components/Services.jsx`
 - `src/assets/images/companies/GRA.webp` (user-supplied asset integrated without replacement)
+- `src/assets/images/companies/hubblemind.jpg` (user-supplied asset)
+- `src/assets/images/companies/knust.jpg` (user-supplied asset)
+- `src/assets/images/companies/lerato.jpg` (user-supplied asset)
 
 ### Modified
 
@@ -41,10 +53,12 @@ The pre-implementation audit is recorded in [`AUDIT-2026-11-09.md`](./AUDIT-2026
 - `src/components/About.jsx`
 - `src/components/Contact.jsx`
 - `src/components/Experience.jsx`
+- `src/components/HeroGlobe.jsx`
 - `src/components/Home.jsx`
 - `src/components/RecordEntry.jsx`
 - `src/components/Skills.jsx`
 - `src/components/StructuredData.jsx`
+- `src/components/globe/createGlobeScene.js`
 - `src/config/constants.js`
 - `src/data/projects.js`
 - `src/index.css`
@@ -57,7 +71,8 @@ The pre-implementation audit is recorded in [`AUDIT-2026-11-09.md`](./AUDIT-2026
 - `npm run lint`: passed with no errors or warnings.
 - `npm run build`: passed; `/` and `/projects` prerendered successfully.
 - Production asset output includes the hashed GRA WebP (`GRA-BMnh2PQO.webp`, 7.33 KB in this build).
-- `npx playwright test`: **11/11 passed** in the final run.
+- `npx playwright test`: **11/11 passed** in the final run (3.2 minutes).
+- Experience regression coverage confirms all eight employer images are present and that the GRA, KNUST, HubbleMind, and Lerato Consult assets decode successfully.
 - Automated axe checks: no violations in the scanned WCAG A/AA rules on both routes, both themes, or the open mobile menu.
 - Responsive automation: no horizontal overflow at 320, 390, 768, 1024, 1440, or 1920 px.
 - Covered keyboard Earth controls, reduced motion, mobile navigation, project filters, dialogs, WebGL/texture/context failures, country-data retry, offscreen rendering, route cleanup, and no-JavaScript content and metadata.

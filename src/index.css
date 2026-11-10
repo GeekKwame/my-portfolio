@@ -207,14 +207,17 @@
 
   /* Monochrome until hovered, then a slight tilt into colour */
   .grayscale-hover {
-    filter: grayscale(100%);
     transition: filter 500ms ease, transform 500ms ease;
   }
 
-  .grayscale-hover:hover,
-  .group:hover .grayscale-hover {
-    filter: grayscale(0%);
-    transform: rotate(3deg) scale(1.03);
+  @media (hover: hover) {
+    .grayscale-hover { filter: grayscale(100%); }
+
+    .grayscale-hover:hover,
+    .group:hover .grayscale-hover {
+      filter: grayscale(0%);
+      transform: rotate(2deg) scale(1.02);
+    }
   }
 
   /* Text sits at 20% and a solid fill sweeps across it left to right */
@@ -304,11 +307,11 @@
   .globe-canvas canvas:active { cursor: grabbing; }
   .globe-location { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .5rem .75rem; font-size: .75rem; }
   .globe-location-dot { width: 6px; height: 6px; border-radius: 50%; background: rgb(var(--signal)); box-shadow: 0 0 12px rgb(var(--signal) / .35); }
-  .globe-looks { display: flex; justify-content: center; border-bottom: 1px solid rgb(var(--rule)); margin-top: 1rem; }
-  .globe-looks button { min-height: 44px; padding: .5rem .8rem; font-size: .6875rem; letter-spacing: .04em; font-weight: 600; color: rgb(var(--ink-muted)); border-bottom: 2px solid transparent; }
-  .globe-looks button[aria-pressed='true'] { border-color: rgb(var(--accent)); color: rgb(var(--ink)); }
-  .globe-controls { display: flex; justify-content: center; align-items: center; gap: .25rem; margin-top: .4rem; }
-  .globe-controls button { min-height: 44px; min-width: 44px; padding: .5rem; border-radius: .5rem; font-size: .6875rem; color: rgb(var(--ink-muted)); }
+  .globe-looks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .25rem; margin-top: 1rem; padding: .25rem; border: 1px solid rgb(var(--rule)); border-radius: .75rem; background: rgb(var(--paper-raised) / .72); }
+  .globe-looks button { min-height: 44px; padding: .5rem .65rem; border-radius: .5rem; font-size: .6875rem; letter-spacing: .035em; font-weight: 700; color: rgb(var(--ink-muted)); }
+  .globe-looks button[aria-pressed='true'] { color: rgb(var(--paper)); background: rgb(var(--ink)); box-shadow: 0 1px 0 rgb(var(--rule-strong) / .4); }
+  .globe-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: .35rem; margin-top: .65rem; }
+  .globe-controls button { min-height: 44px; min-width: 44px; padding: .5rem .7rem; border: 1px solid rgb(var(--rule)); border-radius: .65rem; background: rgb(var(--paper-raised) / .55); font-size: .6875rem; font-weight: 600; color: rgb(var(--ink-muted)); }
   .globe-controls button:hover, .globe-looks button:hover { color: rgb(var(--ink)); background: rgb(var(--paper-sunk)); }
   .globe-controls button:disabled, .globe-looks button:disabled { cursor: default; opacity: .65; }
   .globe-status { min-height: 1.25rem; margin-top: .5rem; font-size: .75rem; text-align: center; color: rgb(var(--ink-muted)); }

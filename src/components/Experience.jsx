@@ -6,6 +6,9 @@ import oneHealthLogo from '../assets/images/companies/onehealthtech.png';
 import amalitechLogo from '../assets/images/companies/Amalitech.png';
 import afarinickLogo from '../assets/images/companies/afarinick_company_limited_logo.jpg';
 import graLogo from '../assets/images/companies/GRA.webp';
+import knustLogo from '../assets/images/companies/knust.jpg';
+import hubbleMindLogo from '../assets/images/companies/hubblemind.jpg';
+import leratoLogo from '../assets/images/companies/lerato.jpg';
 
 const EXPERIENCES = [
   {
@@ -53,6 +56,7 @@ const EXPERIENCES = [
     location: 'Kumasi, Ghana',
     description: 'Delivered Tier 1 and Tier 2 technical support, assisted with Active Directory administration, and documented repeatable technical procedures.',
     skills: ['IT Support', 'Active Directory', 'Troubleshooting', 'Documentation'],
+    logo: knustLogo,
     logoText: 'KNUST',
   },
   {
@@ -75,6 +79,8 @@ const EXPERIENCES = [
     duration: 'Nov 2024 – Dec 2024',
     description: 'Prepared health data and trained machine-learning classifiers as part of a data science internship project.',
     skills: ['Data Preparation', 'Machine Learning', 'Python'],
+    logo: hubbleMindLogo,
+    logoClassName: 'object-cover',
     logoText: 'HM',
   },
   {
@@ -85,6 +91,8 @@ const EXPERIENCES = [
     location: 'Greater Accra, Ghana',
     description: 'Installed and configured POS systems for retail and hospitality environments and documented troubleshooting and support procedures.',
     skills: ['POS Configuration', 'IT Support', 'Troubleshooting', 'Business Technology'],
+    logo: leratoLogo,
+    logoClassName: 'object-cover object-top',
     logoText: 'LC',
   },
   {

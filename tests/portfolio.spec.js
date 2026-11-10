@@ -96,10 +96,16 @@ test('responsive layouts, saved themes, navigation, filters, and image dialogs',
   await expect(page.getByRole('link', { name: 'Discuss a project' })).toHaveAttribute('href', /mailto:dogbeblessingkwame@gmail\.com\?subject=Project%20enquiry/);
   await expect(page.locator('#services li')).toHaveCount(5);
   await expect(page.locator('#experience')).toContainText('Data Entry, Returns Processing & IT Support Intern');
+  await expect(page.locator('#experience img[alt$=" logo"]')).toHaveCount(8);
   const graLogo = page.getByAltText('Ghana Revenue Authority (GRA) logo');
   await graLogo.scrollIntoViewIfNeeded();
   await expect(graLogo).toBeVisible();
   await expect.poll(() => graLogo.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
+  for (const alt of ['KNUST logo', 'HubbleMind logo', 'Lerato Consult logo']) {
+    const logo = page.getByAltText(alt);
+    await logo.scrollIntoViewIfNeeded();
+    await expect.poll(() => logo.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
+  }
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
