@@ -38,10 +38,10 @@ const Skills = memo(function Skills() {
   return (
     <Section
       id="skills"
-      number="02"
+      number="03"
       label="Skills"
-      title="Tools with a purpose"
-      lede="The technologies I use to build, deploy, and maintain software. Follow each capability to a project where it’s put to work."
+      title="The tools behind the work"
+      lede="I choose tools for the problem in front of me, not for the trend. Follow any group to a project where those tools earned their place."
     >
       <div className="grid gap-x-10 gap-y-12 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
         {CAPABILITY_GROUPS.map((group) => (
@@ -53,7 +53,7 @@ const Skills = memo(function Skills() {
               ))}
             </ul>
             <p className="mt-auto pt-5 text-sm leading-8 text-ink-muted">
-              <span className="label mr-2">Used in</span>
+              <span className="label mr-2">See them in</span>
               {group.evidence.map((slug, i) => (
                 <span key={slug}>
                   <Link to={projectHref(slug)} className="link !text-ink-muted hover:!text-accent-strong">

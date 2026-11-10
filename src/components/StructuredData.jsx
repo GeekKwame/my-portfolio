@@ -46,12 +46,18 @@ function StructuredData() {
       "GeoDjango",
       "PostGIS",
       "Spatial analysis",
+      "Geographic information systems",
+      "Automation",
       "React",
+      "Web application development",
+      "API engineering",
       "Docker",
       "GitHub Actions",
       "CI/CD",
       "Cloud Computing",
-      "Full Stack Development"
+      "Full Stack Development",
+      "IT support",
+      "Point of sale systems"
     ],
     "hasOccupation": {
       "@type": "Occupation",

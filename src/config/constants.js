@@ -5,19 +5,19 @@
 
 export const SITE_URL = 'https://devedmund.vercel.app/';
 
-/** LinkedIn headline — single source of truth for positioning across the site */
+/** LinkedIn headline, used as the positioning source across the site. */
 export const HEADLINE =
-  'Software Engineer | Python · FastAPI · Django · React | AWS · Terraform · CI/CD | Open to Opportunities';
+  'Software Engineer | Backend & Cloud | Web Applications | Data & GIS';
 
-/** Contact email — single source of truth for mailto, contact form, and footer */
+/** Contact email used for mailto links, the contact section, and the footer. */
 export const CONTACT_EMAIL = 'dogbeblessingkwame@gmail.com';
 
 export const SEO = {
-  title: 'Blessing Edmund | Cloud & Backend Engineer',
+  title: 'Blessing Edmund | Software Engineer | Backend & Cloud | Web Applications | Data & GIS',
   description:
-    'Cloud and backend engineer in Ghana building Python APIs and AWS infrastructure, with geospatial projects in QGIS, GeoDjango and PostGIS. Explore case studies and mapping work.',
+    'Meet Blessing Edmund, a software engineer in Accra who builds dependable APIs, web applications, cloud systems, automation, and practical GIS tools.',
   keywords:
-    'Software Engineer, Cloud Engineer, AWS, Terraform, Docker, FastAPI, Django, Python Developer, PostgreSQL, React, Linux, DevOps, CI/CD, GitHub Actions, Ghana, Portfolio, QGIS, PostGIS, GeoDjango, Geospatial',
+    'Software Engineer, Backend Engineer, Cloud Engineer, Web Application Development, API Engineering, AWS, Terraform, Docker, FastAPI, Django, Python, JavaScript, React, PostgreSQL, DevOps, CI/CD, Automation, QGIS, PostGIS, GeoDjango, GIS, Ghana',
   ogSiteName: 'Blessing Edmund Portfolio',
 };
 
@@ -25,15 +25,15 @@ export const PERSONAL_INFO = {
   name: 'Blessing Edmund',
   initials: 'BEKD',
   fullName: 'Blessing Edmund Kwame Dogbe',
-  title: 'Cloud & Backend Engineer',
+  title: 'Software Engineer',
   headline: HEADLINE,
-  bio: 'Cloud and backend engineer building production Python APIs and AWS infrastructure with Terraform, Docker, and CI/CD.',
+  bio: 'I’m a software engineer who enjoys turning messy, real-world problems into systems people can understand and rely on.',
   intro:
-    'I build Python backends and the AWS infrastructure they run on: declared in Terraform or SAM, deployed through CI/CD, and tested before they ship.',
+    "I'm Edmund Blessing, a software engineer in Accra. I build dependable APIs, web apps, and cloud systems, and I use automation, data, and GIS to solve practical problems.",
   currentRole: 'Software Engineer at Afarinick Company Limited',
   location: 'Accra, Ghana',
   timezone: 'GMT',
-  availability: 'Open to full-time engineering roles, freelance infrastructure work, and technical collaborations.',
+  availability: 'I’m open to full-time software engineering roles, remote or contract work, and a small number of freelance projects.',
   email: CONTACT_EMAIL,
 };
 
@@ -80,19 +80,21 @@ export const SOCIAL_LINKS = [
  */
 export const NAVIGATION_LINKS = [
   { id: 'work', name: 'Work', href: '/#work', section: 'work' },
+  { id: 'services', name: 'Services', href: '/#services', section: 'services' },
   { id: 'projects', name: 'Projects', href: '/projects', route: '/projects' },
   { id: 'experience', name: 'Experience', href: '/#experience', section: 'experience' },
   { id: 'about', name: 'About', href: '/#about', section: 'about' },
   { id: 'contact', name: 'Contact', href: '/#contact', section: 'contact' },
 ];
 
-/** Homepage sections in order, with their numbers — used by section headers and the footer index */
+/** Homepage sections in order, with their numbers for section headers and the footer index. */
 export const SECTION_INDEX = [
   { number: '01', name: 'Work', to: 'work' },
-  { number: '02', name: 'Skills', to: 'skills' },
-  { number: '03', name: 'Experience', to: 'experience' },
-  { number: '04', name: 'About', to: 'about' },
-  { number: '05', name: 'Contact', to: 'contact' },
+  { number: '02', name: 'Services', to: 'services' },
+  { number: '03', name: 'Skills', to: 'skills' },
+  { number: '04', name: 'Experience', to: 'experience' },
+  { number: '05', name: 'About', to: 'about' },
+  { number: '06', name: 'Contact', to: 'contact' },
 ];
 
 export const RESUME = {

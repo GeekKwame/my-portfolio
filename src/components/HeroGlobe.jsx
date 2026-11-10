@@ -43,7 +43,7 @@ const HeroGlobe = memo(function HeroGlobe() {
   return (
     <div className="globe-experience">
       <div className="globe-caption" aria-hidden="true">
-        <span>Our shared perspective</span><span>01 / Earth</span>
+        <span>Explore the globe</span><span>My home / Accra</span>
       </div>
       <div className="hero-globe-stage relative mx-auto aspect-square w-full">
         {!ready && <GlobeFallback message={unavailable ? 'A quieter view of our world.' : 'Preparing the Earth…'} />}
@@ -51,7 +51,7 @@ const HeroGlobe = memo(function HeroGlobe() {
       </div>
       <div className="globe-location">
         <span className="globe-location-dot" aria-hidden="true" />
-        <span>Accra, Ghana</span><span className="text-ink-muted">5.60° N / 0.19° W</span>
+        <span>Calling Accra, Ghana home</span><span className="text-ink-muted">5.60° N / 0.19° W</span>
       </div>
       {unavailable ? (
         <p className="mt-4 text-center text-sm text-ink-muted" role="status">Interactive Earth is unavailable. You can still explore all my work below.</p>
@@ -72,7 +72,7 @@ const HeroGlobe = memo(function HeroGlobe() {
             <button type="button" disabled={!ready} onClick={() => apiRef.current?.reset()}>Reset view</button>
             <button type="button" disabled={!ready} onClick={() => apiRef.current?.rotate(0.2)} aria-label="Rotate Earth right">→</button>
           </div>
-          <p className="mt-2 text-center text-xs text-ink-muted">Drag sideways or use arrow keys to explore.</p>
+          <p id="globe-instructions" className="mt-3 text-center text-xs leading-relaxed text-ink-muted">Drag the globe or use the arrow keys. Press Home whenever you want to return to Accra.</p>
           {look === 'countries' && (
             <div className="mt-4">
               <label htmlFor="globe-country" className="sr-only">Explore a country</label>

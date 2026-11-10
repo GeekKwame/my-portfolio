@@ -6,20 +6,20 @@ import { PERSONAL_INFO } from '../config/constants';
 
 const PRINCIPLES = [
   {
-    title: 'Infrastructure is declared, not clicked',
-    body: 'Production resources live in Terraform or AWS SAM, so every environment can be reviewed, reproduced, and rolled back, with no manual drift.',
+    title: 'Make infrastructure repeatable',
+    body: 'I keep production resources in Terraform or AWS SAM so the setup can be reviewed, reproduced, and rolled back without relying on a trail of manual clicks.',
   },
   {
-    title: 'Short-lived credentials over stored keys',
-    body: 'Where a pipeline deploys to AWS, I prefer OIDC federation, so each run gets temporary STS credentials instead of an access key sitting in repository secrets.',
+    title: 'Keep credentials short lived',
+    body: 'When a pipeline deploys to AWS, I prefer OIDC federation. Each run gets temporary credentials, so there is no long-lived access key sitting in repository secrets.',
   },
   {
-    title: 'Isolation by default',
-    body: 'Every query is scoped to its tenant, and sensitive comparisons run in constant time where it matters.',
+    title: 'Protect every tenant by default',
+    body: 'I scope every query to its tenant and use constant-time comparisons for sensitive values where that protection matters.',
   },
   {
-    title: 'Tests gate the pipeline',
-    body: 'Tests and linting run in CI on every push, against a real database service where the code depends on one.',
+    title: 'Let tests stop bad changes',
+    body: 'Tests and linting run in CI on every push. When the code depends on a database, the pipeline checks it against a real database service too.',
   },
 ];
 
@@ -32,9 +32,9 @@ const About = memo(function About() {
   return (
     <Section
       id="about"
-      number="04"
+      number="05"
       label="About"
-      title="A systems mindset, from the ground up"
+      title="Curious about the whole system"
     >
       <div className="grid items-start gap-10 sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] sm:gap-14">
         <ScribblePortrait src={profilePic} alt={`Portrait of ${PERSONAL_INFO.name}`} className="mx-auto w-full max-w-[15rem]" />
@@ -43,20 +43,20 @@ const About = memo(function About() {
             {PERSONAL_INFO.bio}
           </p>
           <p>
-            I studied Applied Mathematics, and the habit stuck: I like systems I can reason about, with clear
-            data flow, explicit failure modes, and reliability I can measure.
+            Applied Mathematics taught me to enjoy difficult problems and ask better questions. That habit stayed
+            with me: I like systems with clear data flows, predictable behaviour, and reliability I can measure.
           </p>
           <p>
-            I started in hands-on IT support, which taught me what actually breaks in production and how much
-            good documentation is worth. From there I moved into backend engineering, then into the cloud. The
-            thread through all of it: infrastructure is part of the product, not something bolted on after it.
+            I started in hands-on IT support, where I learned what breaks for real people and how valuable clear
+            documentation can be. That led me into backend engineering and then the cloud. Through all of it, I’ve
+            treated infrastructure as part of the product, not an afterthought.
           </p>
 
           <p>
-            I’m now developing my geospatial skills alongside my software engineering work at Afarinick.
-            My Ghana Cocoa Belt project explores QGIS, coordinate systems, spatial joins and geometry
-            validation using synthetic farms. Asase GIS connects that learning to GeoDjango, PostGIS
-            and web mapping. These personal projects document what I can build and what I’m learning next.
+            I’m also growing my geospatial skills alongside my software engineering work at Afarinick.
+            Ghana Cocoa Belt lets me explore QGIS, coordinate systems, spatial joins, and geometry validation
+            with synthetic farms. Asase GIS takes that learning into GeoDjango, PostGIS, and web mapping.
+            I share these projects openly because the learning matters as much as the finished result.
           </p>
 
           <div className="pt-4">

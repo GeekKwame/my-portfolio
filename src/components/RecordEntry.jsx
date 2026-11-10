@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
 /** One row in the experience record: logo, organisation and role, dates on the right, details below. */
-function RecordEntry({ title, organization, type, duration, location, isCurrent, description, highlights, skills, logo, logoText }) {
+function RecordEntry({ title, organization, type, duration, location, isCurrent, description, highlights, skills, logo, logoText, logoClassName }) {
   const [logoFailed, setLogoFailed] = useState(false);
 
   return (
     <li className="group py-9">
-      <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-        <div className="grayscale-hover flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-rule bg-white p-1.5">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+        <div className="grayscale-hover flex h-16 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-rule bg-white p-1 sm:w-24">
           {logo && !logoFailed ? (
-            <img src={logo} alt="" width="60" height="60" loading="lazy" decoding="async" className="h-full w-full object-contain" onError={() => setLogoFailed(true)} />
+            <img src={logo} alt={`${organization} logo`} width="96" height="64" loading="lazy" decoding="async" className={`h-full w-full ${logoClassName || 'object-contain'}`} onError={() => setLogoFailed(true)} />
           ) : (
             <span aria-hidden="true" className="font-mono text-[0.6875rem] text-neutral-500">{logoText}</span>
           )}
@@ -35,11 +35,11 @@ function RecordEntry({ title, organization, type, duration, location, isCurrent,
           <p className="font-mono text-[0.9375rem] font-semibold leading-tight text-ink">
             {duration}
           </p>
-          <p className="text-sm text-ink-muted mt-1">{location}</p>
+          {location && <p className="text-sm text-ink-muted mt-1">{location}</p>}
         </div>
       </div>
 
-      <div className="min-w-0 sm:pl-[calc(60px+2rem)]">
+      <div className="min-w-0 sm:pl-[calc(6rem+1.5rem)]">
         {description && (
           <p className="mt-4 max-w-prose text-ink-soft leading-relaxed">{description}</p>
         )}
